@@ -1,0 +1,59 @@
+<!-- <div class="jumbotron text-center">
+        <h1>Contact Page</h1>
+
+        <p>{{ message }}</p>
+    </div> -->
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" id="todo">ToDoApp</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="active">
+            <!-- <http://localhost:8096a href="#signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a> -->
+            <a ui-sref="signup" class="hidden-xs"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
+            <a ui-sref="signup" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
+          </li>
+          <li class="active">
+            <!-- <a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> -->
+            <a ui-sref="login" class="hidden-xs"><span class="glyphicon glyphicon-log-in"></span>login</a>
+            <a ui-sref="login" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse"><span class="glyphicon glyphicon-log-in"></span>login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>     <!-- MAIN CONTENT AND INJECTED VIEWS -->
+    <form role="form" class="form1" name="signupForm">
+  		<h3>Sign up</h3>
+  		<div class="form-group">
+
+  			<label for="username"><span class="glyphicon glyphicon-user"></span>EnterName</label>
+        <span style="color:Red;font-size:9px" ng-show="signupForm.username.$error.required"><span class="glyphicon glyphicon-asterisk"></span></span>
+  			<input type="text" class="form-control" name="username" ng-model="user.username"  placeholder="Entername" ng-pattern="/^[A-Za-z]+$/" required>
+  		</div>
+      <span style="color:Red" ng-show="signupForm.username.$dirty&&signupForm.username.$error.pattern">name is not valid</span>
+  		<div class="form-group">
+  			<label for="email"><span class="glyphicon glyphicon-email"></span>Email</label>
+          <span style="color:Red;font-size:9px" ng-show="signupForm.email.$error.required"><span class="glyphicon glyphicon-asterisk"></span></span>
+  			<input type="email" class="form-control" name="email" ng-model="user.email" placeholder="Enter email" ng-pattern="/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/" required>
+  		</div>
+        <span style="color:Red" ng-show="signupForm.email.$dirty&&signupForm.email.$error.pattern">email is not valid</span>
+  		<div class="form-group">
+  			<label for="password"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+        <span style="color:Red;font-size:9px" ng-show="signupForm.password.$error.required"><span class="glyphicon glyphicon-asterisk"></span></span>
+  			<input type="password" class="form-control" name="password" ng-model="user.password" ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,10}/" placeholder="Enter password" required>
+  		</div>
+      <span style="color:Red" ng-show="signupForm.password.$dirty&&signupForm.password.$error.pattern">password is not valid</span>
+  		<div class="form-group">
+  			<label for="reenterpassword"><span class="glyphicon glyphicon-eye-open"></span>ReenterPassword</label>
+        <span style="color:Red;font-size:9px;" ng-show="signupForm.reenterpassword.$error.required"><span class="glyphicon glyphicon-asterisk"></span></span>
+  			<input type="password" class="form-control" name="reenterpassword" ng-model="user.reEnterPassword" placeholder="ReEnter password" required>
+  		</div>
+  			<button type="button" id="signin" class="btn btn-block" ng-click="signupPage()" ng-disabled="signupForm.$invalid"><span class="glyphicon glyphicon-off"></span>Register</button>
+  	</form>

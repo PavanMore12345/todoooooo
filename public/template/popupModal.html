@@ -1,0 +1,28 @@
+              <div id="modalsize" >
+                
+                <input type="text" ng-style="$ctrl.modalColor" placeholder="Title" ng-model="$ctrl.updatetitle" id="updatetitle" autofocus/></input>
+                <div ng-style="$ctrl.modalColor" contenteditable1 contenteditable="true" ng-model="$ctrl.updatecontent" placeholder="Take a note..." id="updatecontent"></div>
+                <div ng-style="$ctrl.modalColor" id="staticicon">
+                  <div id="date_height">
+                    <div id="date">
+                      Edited {{$ctrl.date | date:'HH:mm'}}
+                    </div>
+                  </div>
+                    <div id="hideicon">
+                        <a id="remove" ng-click="$ctrl.remove()"><img id="removeimg" src="../img/Remove.png"></a>
+                    </div>
+                    <button ng-style="$ctrl.modalColor" id="updatedone" ng-click="$ctrl.update()"><b>DONE</b></button>
+                </div>
+              </div>
+
+<!-- <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  awsegdbfbhfxfrgthgtrfnjhfgt
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+</div> -->

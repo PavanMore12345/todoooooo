@@ -1,0 +1,87 @@
+<div ng-class:"divchange" class="row">
+<div id="pinned">pinned</div>
+<div ng-class ="class"  ng-repeat="x in records| filter:query as results track by $index" ng-if='x.pin_note' >
+
+<div class="w3-panel w3-card" id="card" style="background-color:{{x.color}}" ng-mouseleave="open = false;colorHover=false" ng-mouseenter="open = true;" >
+ <a ng-click=pinned_note(x._id,'false') ><img src="image/icons8-Pin.png" uib-tooltip="unpinnote" tooltip-placement="bottom" style="top:0;float:right;"></a>
+<div class ="title" ng-bind-html="x.title" style="padding-left:14px;font-size:14px;font-weight:bold;"></div>
+<br>
+<div class="body" ng-bind-html="x.bodyContent" ng-click="updateData(x._id,x.title,x.bodyContent)" data-target="#myModal" data-toggle="modal" style="padding-left:14px;font-size:14px">
+  </div>
+<div ng-show="open == true">
+
+<div class="btn-group" uib-dropdown dropdown-append-to-body>
+<span class="glyphicon glyphicon-hand-up" aria-hidden="true"  style="padding-left:10px;" uib-dropdown-toggle>
+<ul uib-dropdown-menu aria-labelledby="simple-dropdown">
+<li id="datepick">
+<a id="normal" style="font-size:16px">Reminder:</a>
+<a id="drop" ng-click=reminder(x._id,"today",20) href>Last today<span id="abc">08:00PM</span></a>
+<a id="drop" ng-click=reminder(x._id,"tomorrow",8) href>Tomorrow &nbsp<span id="abc">08:00AM</span></a>
+<a id="drop" ng-click=reminder(x._id,"nextWeek",8) href>Next week<span id="abc">08:00PM</span></a>
+<!-- <input type="date" ng-model="bdaydate" placeholder="Date"/> -->
+<div class="dropdown" style="">
+<div class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown">
+  <div class="input-group" style="margin-left:13px;width:94%">
+    <input type="text" class="form-control" data-ng-model="toDo.remainder" name="remainder" placeholder="Pick date & time">
+    <span class="input-group-addon">
+      <i class="glyphicon glyphicon-calendar"></i>
+    </span>
+  </div>
+</div>
+
+<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+  <datetimepicker data-ng-model="toDo.remainder" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }" />
+</ul>
+<br>
+<button ng-click="reminder(x._id,'random',toDo.remainder)" class="btn" style="width:100%">Save</button>
+</div>
+</li>
+</ul>
+  </span>
+    </div>
+    <!-- <img src="image/clock.png"></img> pick date & time</a> -->
+    <img src="image/archieve.png"  style="padding-left:10px;">
+    </img>
+
+    <div class="dropdown">
+        <img src="image/color.png" ng-mouseover="colorHover=true"style="padding-left:10px;"></img>
+
+    </div>
+    <div class="btn-group" uib-dropdown dropdown-append-to-body>
+<img src="image/list.png"  ng-click="dropdown()" class="dropbtn" style="padding-left:10px;" uib-dropdown-toggle></img>
+<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+<li role="menuitem"><a ng-click="delete(x._id)">delete note</a></li>
+<li role="menuitem"><a ng-click="copyData(x)">copy note</a></li>
+</ul>
+</div>
+
+
+    <!-- <div class="dropdown">
+        <img src="image/list.png" ng-show="open" ng-click="dropdown()" class="dropbtn" style="padding-left:10px;"></img>&nbsp
+        <div class="dropdown-content" style="left:0;">
+            <a ng-click="delete(x._id)">delete note</a>
+            <a ng-click="copyData(x)">copy note</a>
+        </div>
+    </div> -->
+    <div id="color" ng-show="colorHover" ng-mousehover="colorHover=true" ng-mouseleave="colorHover=false">
+
+        <a href ng-click="changeColor(x._id,y.color)" ng-repeat="y in color">
+            <img uib-tooltip={{y.tooltip}} tooltip-placement="bottom" ng-src={{y.path}} style="padding-left:8px;padding-top:8px"></img>
+        </a>
+    </div>
+
+</div>
+
+<div id="remindericon" ng-if="x.reminder!=undefined" ng-mouseover="removeReminderIcon=true" ng-mouseleave="removeReminderIcon=false">
+<div ng-if="x.reminder!=undefined" style="border-bottom:2px dashed #e8e8e8;width:100%"></div>
+<img style="margin-left:10px" src="../image/icons8-Clock-20.png"></img>
+&nbsp&nbsp&nbsp{{day}} {{x.reminder |date:'EEE dd/MMM HH:mm'}}
+<img ng-show="removeReminderIcon" id="removeIcon" ng-click=deleteReminder(x._id) src="../image/icons8-Delete-20.png" style="float:right"></img>
+</div>
+</div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>

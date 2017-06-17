@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+
+<link rel="stylesheet" href="assets/todo.css">
+
+<body id="body1">
+<nav class="navbar navbar-inverse navbar-fixed-top" id="navbar11" role="navigation">
+  <div class="container-fluid">
+            <div class="navbar-header">
+                <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" id="menu-toggle"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                <!-- <a class="navbar-brand" href="#"><span id="google"><b>Google</b>Keep</span> -->
+                <span id="google"><b>Google</b> keep</span>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <!-- <span id="google"><b>Google</b>Keep</span> -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <!-- <a class="navbar-brand" href="#"><span id="google"><b>Google</b>Keep</span> -->
+                    </li>
+                    <li>
+                        <form class="navbar-form navbar-right" action="#" method="GET">
+                            <div class="input-group">
+                                <input type="text" id="search" class="form-control" placeholder="search..." ng-model="query" name="search">
+                            </div>
+                        </form>
+                        <!-- <div class="form-group">
+                             <div class="icon-addon addon-lg">
+                                 <input type="text" placeholder="Email" class="form-control" id="email">
+                                 <label for="email" class="glyphicon glyphicon-search" rel="tooltip" title="email"></label>
+                             </div> -->
+                    </li>
+                    <li><a id="refresh" uib-tooltip="refresh" tooltip-placement="bottom" tooltip-append-to-body="true"><span class="glyphicon glyphicon-refresh" aria-hidden="true" ng-click="refresh()"></span> </a></li>
+
+                    <!-- <a ><span aria-hidden="true" class="glyphicon glyphicon-list"  ng-click="list()" ></span> </a> -->
+
+                    <li>
+                        <a id="listview" uib-tooltip="List View" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="listview()" ng-style="list"><img src="image/icons8-Bulleted List Filled-20.png"></a>
+                    </li>
+                    <li>
+                        <a id="gridview" uib-tooltip="Grid View" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="gridview()" ng-style="grid"><img src="image/icons8-Grid 2 Filled-20.png"></a>
+                    </li>
+                      <li id="li" uib-dropdown>
+                        <a id="profileancor" uib-tooltip="Profile" tooltip-placement="bottom" tooltip-append-to-body="true" uib-dropdown-toggle >
+                            <img  id="profileimg"  ng-src="{{profilepic}}">
+                        </a>
+                    <ul class="dropdown-menu-right" id="dropdownprofile" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+                  <div class="row" style="padding-left:15px;">
+                    <div >
+                      <image id="dropdownpic" ng-src="{{profilepic}}">
+                      </image>
+                      <button ng-click="open()" id="picButton" style="margin-left: 22px;">Profile picture</button>
+                    </div>
+                    <div>
+                      <br>
+                      <div>
+                        <div><b>name</b> : {{userName}}
+                        </div>
+                        <div><b>email </b>: {{userEmail}}
+                        </div>
+                      </div>
+                      <a id="logout" uib-tooltip="Log out" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="logoutPage()" style="text-align:center;margin-right: 124px;margin-top: 13px;">
+                        <button type="button" >logout</button>
+                      </a>
+                    </div>
+                </div>
+                </ul>
+              </li>
+              <!-- <a ng-click="logoutPage()">logout</a> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="wrapper" class="toggled">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <br>
+                </li>
+                <li class="sidebar-brand">
+                    <a class="navbar-brand">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="todo"><span class="glyphicon glyphicon-leaf" aria-hidden="true" style="padding-left:10px"></span>&nbsp notes</a>
+                </li>
+                <li>
+                    <a><span class="glyphicon glyphicon-hand-up" aria-hidden="true" style="padding-left:10px" ></span>&nbsp reminders</a>
+                </li>
+                <li>
+                    <a><span class="glyphicon glyphicon-trash" aria-hidden="true" style="padding-left:10px"></span>&nbsp Trash</a>
+                </li>
+                <li>
+                    <a ui-sref="archive">  <img src="image/archieve.png" style="padding-left:28px;">&nbsp Archive</a>
+                </li>
+
+            </ul>
+        </div>
+        <div id="page-content-wrapper">
+          <div class="container-fluid">
+            <div  id="content">
+                <div class="row" style="margin-top:60px">
+                    <div class="col-lg-12">
+                        <div id="containerbox">
+                            <div class="header" contenteditable1 contenteditable="true" placeholder="Title" ng-click="title11()" ng-model="title"></div>
+                            <div id="body">
+                                <div class="mainbody ng-hide" contenteditable1 contenteditable="true" placeholder="Take a note" ng-model="body11" ng-show="myvalue"></div>
+                                <div class="footer ng-hide" style="position:relative" ng-show="myvalue">
+                                    <a><span class="glyphicon glyphicon-hand-up" aria-hidden="true">
+                              <button type="button" ng-click="done()" id="done">DONE</button>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row"> -->
+
+
+                              <div class="row" style="margin-top:30px;">
+                               <div ng-include="'template/pinup.html'"></div>
+                               <div ng-include="'template/card.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="myModal" role="dialog" ng-show="myval">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" contenteditable1 contenteditable="true" id="modelheader" placeholder="title" ng-model="modelheader">
+                        </div>
+                        <div class="modal-body" contenteditable1 contenteditable="true" id="modelbody" placeholder="take a note" ng-model="modelbody">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="editdone" ng-click="update()">done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</body>
+<!-- <script src="js/todo.js"></script> -->
+
+
+
+<!-- /#wrapper -->

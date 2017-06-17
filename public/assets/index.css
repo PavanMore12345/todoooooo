@@ -1,0 +1,58 @@
+.form1
+	{
+    background-color:#F0F0EF;
+    /*border-radius: 25px;*/
+		width:30%;
+		height:auto;
+		padding-left:20px;
+		padding-top:20px;
+		padding-right:20px;
+		padding-bottom:20px;
+		/*background-color: gray;*/
+	margin: 0 auto;
+	margin-top:07%
+	}
+	#todo
+	{
+	color: black !important;
+	}
+.error
+{
+color:red;
+}
+.navbar-inverse
+{
+  background-color: orange !important;
+}
+.navbar-nav>.active>a
+{
+	color:black !important;
+	background-color: orange !important;
+}
+#login,#signin
+{
+  background-color: orange;
+}
+h3
+{
+  text-align: center;
+  color:orange;
+  font-weight: bold;
+}
+
+#clicksign
+{
+	color: red !important;
+}
+@media (max-width: 600px)
+{
+	.form1
+	{
+min-width: 300px;
+
+	}
+}
+.glyphicon-asterisk:before
+{
+	font size:9px ;
+}
