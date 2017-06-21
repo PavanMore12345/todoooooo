@@ -46,7 +46,7 @@
 <span style="color:Red" ng-show="myform.password.$dirty&&myform.password.$error.pattern">password is not valid</span>
         <br>
 			<button type="button" id="login" class="btn btn-block" ng-click = "loginPage()" ng-disabled="myform.$invalid"><span class="glyphicon glyphicon-log-in"></span> Login</button><br>
-			<!-- <button type="button" class="btn btn-block btn-danger" id="loginPage"><span class="glyphicon"></span><b>G+</b> Login with google</button><br>
-			<button type="button" class="btn btn-block btn-primary" id="loginPage"><span class="glyphicon"></span>fLogin with facebook</button><br> -->
+			 <a href="auth/google"><button type="button" class="btn btn-block btn-danger" id="loginPage"><span class="glyphicon"></span><b>G+</b> Login with google</button></a><br>
+			<a href= "auth/facebook"><button type="button" class="btn btn-block btn-primary" id="loginPage"><span class="glyphicon"></span>fLogin with facebook</button></a><br>
       <span id=><a ui-sref="signup" id="clicksign"><b>click here for Signup</b></a></span>
 	</form>

@@ -22,7 +22,7 @@ color:red;
 }
 .navbar-inverse
 {
-  background-color: orange !important;
+  background-color: orange;
 }
 .navbar-nav>.active>a
 {

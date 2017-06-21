@@ -3,6 +3,7 @@ app.controller('todoController',function($scope,$location,$uibModal,$rootScope,t
   //$scope.class="col-sm-6 col-lg-4 col-lg-12 item"
   //console.log($scope.open);
 //  $scope.open = false;
+ $scope.booleanvalue=true;
   var colorObj=[
   {
     "color":"fff",
@@ -117,6 +118,24 @@ if (localStorage.view == "list") {
     $scope.list = {
         "display": "block"
     }
+}
+$scope.archive_notes = function(note_id, archiveval) {
+  console.log("archieve");
+  var url = "/archieve/" + note_id + "";
+  var action = "POST";
+
+  var data = {
+    value: archiveval
+  }
+  console.log(url);
+  console.log(data);
+  todoService.app(url, action, data).then(function(data) {
+    console.log(data.data.status);
+    // toastr.info('Note Archieved Successfully');
+    $rootScope.getData11();
+  }).catch(function(error) {
+    console.log(error);
+  })
 }
 // $scope.copydata = function(data)
 // {

@@ -14,7 +14,7 @@ app.use(express.static("./public"));
 //app.use(express.static("./public"));
 
 
-var port = 8101;
+var port = 8040;
 app.listen(port,function () {
   // connect();
   console.log("listning from the port" +port);

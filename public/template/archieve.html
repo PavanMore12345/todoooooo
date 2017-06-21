@@ -1,6 +1,6 @@
 <div ng-class:"divchange" class="row">
-<div id="pinned">pinned</div>
-<div ng-class ="class"  ng-repeat="x in records| filter:query as results track by $index" ng-if='x.pin_note&&!x.archive' >
+<!-- <div id="pinned">pinned</div> -->
+<div ng-class ="class"  ng-repeat="x in records| filter:query as results track by $index" ng-if='x.archive&&!x.pin_note' >
 
 <div class="w3-panel w3-card" id="card" style="background-color:{{x.color}}" ng-mouseleave="open = false;colorHover=false" ng-mouseenter="open = true;" >
  <a ng-click=pinned_note(x._id,'false') ><img src="image/icons8-Pin.png" uib-tooltip="unpinnote" tooltip-placement="bottom" style="top:0;float:right;"></a>
@@ -40,7 +40,7 @@
   </span>
     </div>
     <!-- <img src="image/clock.png"></img> pick date & time</a> -->
-    <img src="image/archieve.png"  style="padding-left:10px;">
+    <img src="image/archieve.png" ng-click="archive_notes(x._id,'false')" uib-tooltip="unarchive" tooltip-placement="bottom" tooltip-append-to-body=true style="padding-left:10px;">
     </img>
 
     <div class="dropdown">
@@ -81,7 +81,3 @@
 </div>
 </div>
 </div>
-<br>
-<br>
-<br>
-<br>

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="assets/todo.css">
 
 <body id="body1">
-<nav class="navbar navbar-inverse navbar-fixed-top" id="navbar11" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-style="navbar11" role="navigation">
   <div class="container-fluid">
             <div class="navbar-header">
                 <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> -->
@@ -16,7 +16,8 @@
                 </button>
                 <a class="navbar-brand" id="menu-toggle"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
                 <!-- <a class="navbar-brand" href="#"><span id="google"><b>Google</b>Keep</span> -->
-                <span id="google"><b>Google</b> keep</span>
+                <span id="google" ng-show="!booleanvalue"><b>Archive</b></span>
+                <span id="google" ng-show="booleanvalue"><b>Google</b> keep</span>
             </div>
 
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -130,6 +131,7 @@
                               <div class="row" style="margin-top:30px;">
                                <div ng-include="'template/pinup.html'"></div>
                                <div ng-include="'template/card.html'"></div>
+                               <div ng-include="'template/archieve.html'"></div>
                         </div>
                     </div>
                 </div>

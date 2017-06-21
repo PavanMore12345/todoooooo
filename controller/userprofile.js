@@ -7,15 +7,18 @@ var userregister=require('../model/user');
 router.post('/', function(req, res) {
   console.log("abc");
   try {
+    //console.log("sssss",req.decoded);
      userregister.userProfile(req.decoded, function(err,data)
   {
-    console.log(req.decoded);
+    console.log("token",req.decoded);
+    console.log("data",data);
     if(err)
     {
+      console.log("error11",err);
       res.send({status:false,message:"user not available"});
     }
     else {
-      console.log(data);
+      //console.log("data",data);
       if (data) {
         res.send({
 
@@ -27,7 +30,7 @@ router.post('/', function(req, res) {
         original:data.originalImage
         });
       }else {
-        res.send({status:false,message:"user not available"});
+        res.send({status:false,message:"user not available..."});
       }
     }
   });

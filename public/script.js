@@ -1,5 +1,5 @@
 //var scotchApp = angular.module('scotchApp', []);
-var app = angular.module('app', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngImgCrop'])
+var app = angular.module('app', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngImgCrop','satellizer'])
   .config(function($stateProvider, $urlRouterProvider) {
 
 
@@ -21,9 +21,12 @@ var app = angular.module('app', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'ui.
         // onEnter: function() {
         //   console.log('inside signup');
         // }
-      })
-    $urlRouterProvider.otherwise('/login');
-
+      }).state('archive', {
+        url: '/archieve',
+        templateUrl: 'template/todo.html',
+         controller: 'archieveController',
+       })
+    $urlRouterProvider.otherwise('/todo');
   })
        app.directive('contenteditable1', [function() {
     return {
