@@ -8,7 +8,7 @@ router.post('/', function(req, res) {
     //console.log("nvlvldsnlvdsnlv");
     try {
         var data = {
-           id:req.body.id,
+           id:req.body._id,
             title: req.body.title,
             bodyContent: req.body.bodyContent
         }

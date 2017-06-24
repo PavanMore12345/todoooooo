@@ -14,10 +14,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" id="menu-toggle"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                <a class="navbar-brand" id="menu-toggle"><img src="image/menu.svg"></img></a>
                 <!-- <a class="navbar-brand" href="#"><span id="google"><b>Google</b>Keep</span> -->
-                <span id="google" ng-show="!booleanvalue"><b>Archive</b></span>
+                <!-- <span id="google" ng-show="!booleanvalue"><b>Archive</b></span> -->
                 <span id="google" ng-show="booleanvalue"><b>Google</b> keep</span>
+                <!-- <span id="google" ng-show="!booleanvalue"><b>Activities</b></span> -->
             </div>
 
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -38,15 +39,15 @@
                                  <label for="email" class="glyphicon glyphicon-search" rel="tooltip" title="email"></label>
                              </div> -->
                     </li>
-                    <li><a id="refresh" uib-tooltip="refresh" tooltip-placement="bottom" tooltip-append-to-body="true"><span class="glyphicon glyphicon-refresh" aria-hidden="true" ng-click="refresh()"></span> </a></li>
+                    <li><a id="refresh" uib-tooltip="refresh" tooltip-placement="bottom" tooltip-append-to-body="true" style="margin-top:6px"><image src="image/refresh.svg" ng-click="refresh()"></img> </a></li>
 
                     <!-- <a ><span aria-hidden="true" class="glyphicon glyphicon-list"  ng-click="list()" ></span> </a> -->
 
                     <li>
-                        <a id="listview" uib-tooltip="List View" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="listview()" ng-style="list"><img src="image/icons8-Bulleted List Filled-20.png"></a>
+                        <a id="listview" uib-tooltip="List View" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="listview()" style="margin-top:6px" ng-style="list"><img src="image/list.svg"></a>
                     </li>
                     <li>
-                        <a id="gridview" uib-tooltip="Grid View" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="gridview()" ng-style="grid"><img src="image/icons8-Grid 2 Filled-20.png"></a>
+                        <a id="gridview" uib-tooltip="Grid View" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="gridview()" style="margin-top:6px" ng-style="grid"><img src="image/grid.svg"></a>
                     </li>
                       <li id="li" uib-dropdown>
                         <a id="profileancor" uib-tooltip="Profile" tooltip-placement="bottom" tooltip-append-to-body="true" uib-dropdown-toggle >
@@ -88,37 +89,39 @@
                 <li class="sidebar-brand">
                     <br>
                 </li>
-                <li class="sidebar-brand">
+                <!-- <li class="sidebar-brand">
                     <a class="navbar-brand">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile
                     </a>
+                </li> -->
+                <li>
+                    <a ui-sref="todo" style="color:black"><img src="image/icons8-Note Filled-20.png" style="padding-left:28px;"></img>&nbsp notes</a>
                 </li>
                 <li>
-                    <a ui-sref="todo"><span class="glyphicon glyphicon-leaf" aria-hidden="true" style="padding-left:10px"></span>&nbsp notes</a>
+                    <a style="color:black"><img src="image/icons8-Hand Up-20.png" style="padding-left:28px;"></img>&nbsp reminders</a>
                 </li>
                 <li>
-                    <a><span class="glyphicon glyphicon-hand-up" aria-hidden="true" style="padding-left:10px" ></span>&nbsp reminders</a>
+                    <a style="color:black"><img src="image/icons8-Trash Can-20.png" style="padding-left:28px;"></img>&nbsp Trash</a>
                 </li>
                 <li>
-                    <a><span class="glyphicon glyphicon-trash" aria-hidden="true" style="padding-left:10px"></span>&nbsp Trash</a>
+                    <a style="color:black" ui-sref="archive">  <img src="image/archieve.png" style="padding-left:28px;"></img>&nbsp Archive</a>
                 </li>
                 <li>
-                    <a ui-sref="archive">  <img src="image/archieve.png" style="padding-left:28px;">&nbsp Archive</a>
+                  <a style="color:black" ui-sref="activity"  ng-init="getDataInfo()"><img src="image/icons8-Activity Feed_20.png" style="padding-left:28px"></img>&nbsp Activites</a>
                 </li>
-
             </ul>
         </div>
         <div id="page-content-wrapper">
           <div class="container-fluid">
             <div  id="content">
-                <div class="row" style="margin-top:60px">
+                <div class="row" style="margin-top:60px" ng-show="booleanvalue">
                     <div class="col-lg-12">
                         <div id="containerbox">
                             <div class="header" contenteditable1 contenteditable="true" placeholder="Title" ng-click="title11()" ng-model="title"></div>
                             <div id="body">
                                 <div class="mainbody ng-hide" contenteditable1 contenteditable="true" placeholder="Take a note" ng-model="body11" ng-show="myvalue"></div>
                                 <div class="footer ng-hide" style="position:relative" ng-show="myvalue">
-                                    <a><span class="glyphicon glyphicon-hand-up" aria-hidden="true">
+                                    <!-- <a><span class="glyphicon glyphicon-hand-up" aria-hidden="true"> -->
                               <button type="button" ng-click="done()" id="done">DONE</button>
                             </div>
                           </div>
@@ -129,9 +132,10 @@
 
 
                               <div class="row" style="margin-top:30px;">
-                               <div ng-include="'template/pinup.html'"></div>
-                               <div ng-include="'template/card.html'"></div>
-                               <div ng-include="'template/archieve.html'"></div>
+                               <div ng-show="booleanvalue" ng-include="'template/pinup.html'"></div>
+                               <div ng-show="booleanvalue" ng-include="'template/card.html'"></div>
+                               <div ng-hide="booleanvalue" ng-include="'template/archieve.html'"></div>
+                               <div ng-show="booleanval" ng-include="'template/activity.html'"></div>
                         </div>
                     </div>
                 </div>

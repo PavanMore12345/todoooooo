@@ -6,8 +6,10 @@ router.post('/:id', function(request, response) {
   console.log(request.params.id);
   var id = request.params.id;
   var data=request.body;
+  var userid = request.decoded;
   console.log("pinned",data);
-  UserData.pinnedData(id,data,function(err, result) {
+  console.log("userid",userid);
+  UserData.pinnedData(id,data,userid.id,function(err, result) {
     if (err) {
       response.send({
         "status": false,

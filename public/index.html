@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css">
     <link rel="stylesheet" href="bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
-
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
     <link rel="stylesheet" href="assets/index.css">
+    <link rel="stylesheet" href="assets/todo.css">
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
@@ -21,7 +22,7 @@
     <script type="text/javascript" src="node_modules/moment/moment.js"></script>
     <script src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
     <script src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
-
+    <script  src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <script src="bower_components/satellizer/dist/satellizer.min.js"></script>
     <script src="bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
     <script src="bower_components/packery/dist/packery.pkgd.min.js"></script>
@@ -38,14 +39,15 @@
     <script src="controller/signupcontroller.js"></script>
     <script src="controller/todocontroller.js"></script>
     <script src="controller/maincontroller.js"></script>
-    <script src="controller/archieveController.js"></script>  
+    <script src="controller/acitivitycontroller.js"></script>
+    <script src="controller/archieveController.js"></script>
     <script src="controller/cropImage.js"></script>
     <script src="directive/packery.js"></script>
      <script src="/services/service.js"></script>
 </head>
 
 <body ng-controller="mainController">
-  <ui-view></ui-view>
+  <ui-view ></ui-view>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 //var scotchApp = angular.module('scotchApp', []);
-var app = angular.module('app', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngImgCrop','satellizer'])
+var app = angular.module('app', ['ui.router','ngSanitize', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngImgCrop','satellizer','toastr'])
   .config(function($stateProvider, $urlRouterProvider) {
 
 
@@ -25,7 +25,11 @@ var app = angular.module('app', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'ui.
         url: '/archieve',
         templateUrl: 'template/todo.html',
          controller: 'archieveController',
-       })
+       }).state('activity', {
+         url: '/activity',
+         templateUrl: 'template/todo.html',
+          controller: 'activityController',
+        })
     $urlRouterProvider.otherwise('/todo');
   })
        app.directive('contenteditable1', [function() {

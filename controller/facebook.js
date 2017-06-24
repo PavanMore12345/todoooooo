@@ -11,18 +11,6 @@ var passport = require('passport');
 var config = require('../config/index');
 
 module.exports = function(passport) {
-    // used to serialize the user for the session
-    // passport.serializeUser(function(user, done) {
-    //     console.log(user);
-    //     done(null, user.id);
-    // });
-    //
-    // // used to deserialize the user
-    // passport.deserializeUser(function(id, done) {
-    //     User.findById(id, function(err, user) {
-    //         done(err, user);
-    //     });
-    // });
 
     // pull in our app id and secret from our auth.js file
     passport.use('facebook', new FacebookStrategy(fbConfig.facebookAuth, function(access_token, refresh_token, profile, done) {
@@ -36,7 +24,7 @@ module.exports = function(passport) {
             User.findOne({
                 'fb.id': profile.id
             }, function(err, user) {
-                console.log("user in fb", user);
+              //console.log("user in fb", user);
 
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
@@ -68,7 +56,7 @@ module.exports = function(passport) {
                     newUser.fb.gender = profile.gender;
                     newUser.fb.profile = JSON.stringify(profile.photos);
                     // save our user to the database
-                    console.log("new user ....",newUser);
+                    //console.log("new user ....",newUser);
                     newUser.save(function(err) {
                         if (err)
                             throw err;

@@ -13,13 +13,15 @@ router.delete('/:id', function(req, res) {
         //     bodyContent: req.body.bodyContent
         // }
         //console.log("HI HOW R U",req.params.id);
-        var data=req.params.id;
-        console.log("id",data);
-        deletecard.deleteCardData(data, function(err, data) {
+        var id=req.params.id;
+        //var userid=req.decoded;
+      //  console.log("id",data);
+        deletecard.deleteCardData(id,function(err, data) {
           console.log(err);
+          console.log("id",id);
             // console.log(data.id1);
             try {
-              console.log(data);
+              console.log("data........",data);
                 if (err) {
                     res.send({
                         "status": false,

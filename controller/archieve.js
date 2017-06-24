@@ -9,9 +9,10 @@ router.post('/:id', function(request, response) {
   console.log(request.params.id);
   var id = request.params.id;
   var data=request.body;
+  var userid=request.decoded.id;
 console.log(data);
-  userData.archiveNote(id,data, function(err, result) {
-    console.log("result",result);
+  userData.archiveNote(id,data,userid, function(err, result) {
+    console.log("result",userid);
     if (err) {
       response.send({
         "status": false,

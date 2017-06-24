@@ -1,8 +1,10 @@
-app.controller('todoController',function($scope,$location,$uibModal,$rootScope,todoService,$timeout,logoutService,datainsertion,getcardData,datadeletion,dataupdation,colorchange,copyContent)
+app.controller('todoController',function($scope,$window,$location,toastr,$uibModal,$rootScope,todoService,$timeout,logoutService,datainsertion,getcardIn,datadeletion,dataupdation,colorchange,copyContent)
 {
   //$scope.class="col-sm-6 col-lg-4 col-lg-12 item"
   //console.log($scope.open);
 //  $scope.open = false;
+var notedata;
+$scope.booleanval=false;
  $scope.booleanvalue=true;
   var colorObj=[
   {
@@ -73,6 +75,7 @@ $scope.listview = function() {
     // $scope.showgrid = false;
     // $scope.showlist = true;
   //  $scope.divchange="addCardList";
+  //$rootScope.notedata="pavan you selected listView ";
     $scope.class="col-lg-12 item";
     $scope.grid = {
         "display": "block"
@@ -87,6 +90,7 @@ $scope.gridview = function() {
     // $scope.showgrid = true;
     // $scope.showlist = false;
     //$scope.divchange="addCard";
+    //$rootScope.notedata="pavan you selected gridView ";
     $scope.class=" col-md-4 item";
     $scope.grid = {
         "display": "none"
@@ -120,6 +124,7 @@ if (localStorage.view == "list") {
     }
 }
 $scope.archive_notes = function(note_id, archiveval) {
+  //  $rootScope.notedata[0]="pavan you selected Archive ";
   console.log("archieve");
   var url = "/archieve/" + note_id + "";
   var action = "POST";
@@ -127,16 +132,41 @@ $scope.archive_notes = function(note_id, archiveval) {
   var data = {
     value: archiveval
   }
+
   console.log(url);
   console.log(data);
   todoService.app(url, action, data).then(function(data) {
     console.log(data.data.status);
     // toastr.info('Note Archieved Successfully');
+      toastr.success("note has archieved");
     $rootScope.getData11();
+
   }).catch(function(error) {
     console.log(error);
   })
 }
+// $scope.get_notes = function(note_id, archiveval) {
+//   //  $rootScope.notedata[0]="pavan you selected Archive ";
+//   console.log("archieve");
+//   var url = "/activity";
+//   var action = "POST";
+//
+//   var data = {
+//     value: archiveval
+//   }
+//
+//   console.log(url);
+//   console.log(data);
+//   todoService.app(url, action, data).then(function(response) {
+//     //console.log(data.data.status);
+//     $scope.records=response.data.msg;
+//        console.log($scope.records);
+//     // toastr.info('Note Archieved Successfully');
+//     //$rootScope.getData11();
+//   }).catch(function(error) {
+//     console.log(error);
+//   })
+// }
 // $scope.copydata = function(data)
 // {
 //   var title=data.title;
@@ -147,17 +177,19 @@ $scope.archive_notes = function(note_id, archiveval) {
 //   addCard(dataCon);
 // }
 $scope.reminder = function(id, day, time) {
+//   $rootScope.notedata[1]="pavan you set reminder";
        var today = new Date();
          var remind = {};
        if (day == "today") {
            // var today = new Date();
+
            today.setHours(time, 00, 00);
            console.log(today);
            // var remind = {};
            remind["time"] = today;
            reminderCall(remind, id, day);
        } else if (day == "tomorrow") {
-
+ //$rootScope.notedata="pavan you selected tomorrows reminder";
            var tomorrow = new Date(today);
            tomorrow.setDate(tomorrow.getDate() + 1);
            tomorrow.setHours(time, 00, 00);
@@ -167,7 +199,7 @@ $scope.reminder = function(id, day, time) {
            reminderCall(remind, id, day);
            // console.log(tomorrow);
        } else if (day == "nextWeek") {
-
+          // $rootScope.notedata[2]="pavan you selected nextWeek reminder";
            var nextWeek = new Date(today);
            nextWeek.setDate(nextWeek.getDate() + 7);
            nextWeek.setHours(time, 00, 00);
@@ -179,16 +211,19 @@ $scope.reminder = function(id, day, time) {
        else{
          console.log("time",time);
            remind["time"] = time;
+          // $rootScope.notedata[3]="you selected time is"+time+"";
            reminderCall(remind, id);
        }
    }
    $scope.deleteReminder=function(id){
-     var remove=todoService.app("/reminders/" + id + "","post");
+     var remove=todoService.app("/removeReminder/" + id + "","post");
+      //$rootScope.notedata[4]="pavan you  deleted reminder";
      remove.then(function(out){
-       if(out.data.status==true){
+      // if(out.data.status==true){
          // console.log(data);
-         $scope.refresh();
-       }
+         $scope.getData11();
+        // toastr.info(' you deleted the reminder');
+       //}
      }).catch(function(error){
        console.log(error);
      })
@@ -204,7 +239,9 @@ $scope.reminder = function(id, day, time) {
                // console.log(out.data.message.reminder);
                // $scope.day=day;
                // $scope.remind =out.data.message.reminder;
-               $scope.refresh();
+                toastr.success("reminder has been set");
+              $scope.getData11();
+
            }
        }).catch(function(error) {
            console.log(error);
@@ -212,13 +249,14 @@ $scope.reminder = function(id, day, time) {
    }
 $scope.refresh = function()
 {
-//  console.log("DSF");
-  $scope.getData11();
+//$rootScope.notedata[5]="pavan you refresh the page";
+$window.location.reload();
 }
 $scope.copyData = function(data)
 {
 
   //console.log("datacon",dataCon);
+//  $rootScope.notedata[6]="pavan you copied note";
   var title=data.title;
      var content=data.bodyContent;
      var color1 = data.color;
@@ -231,6 +269,7 @@ $scope.copyData = function(data)
   httpobj1.then(function(response)
 {
   console.log("res",response);
+    toastr.success("note has copied");
     $scope.getData11();
 },function(response)
 {
@@ -240,11 +279,13 @@ $scope.copyData = function(data)
 
    $scope.changeColor =function(id,color)
    {
+  //   $rootScope.notedata[7]="pavan you changed the color";
      console.log(id);
      console.log("DEL");
      var httpobj123 = colorchange.changeColor(id,color);
      httpobj123.then(function(response)
    {
+       toastr.success("note color has been set");
      $scope.getData11();
    },function(response)
    {
@@ -257,7 +298,7 @@ $scope.copyData = function(data)
   }
   $rootScope.getData11 = function()
 {
-  var httpobj12 = getcardData.getData11();
+  var httpobj12 = getcardIn.getData11();
   httpobj12.then(function(response)
 {
   $scope.records=response.data.msg;
@@ -291,20 +332,24 @@ $scope.delete =function(id)
   var httpobj123 = datadeletion.delete(id);
   httpobj123.then(function(response)
 {
+    toastr.success("note has been deleted");
   $scope.getData11();
 },function(response)
 {
 });
 }
-$scope.pinned_note = function(pin_id,pinvalue)
+$scope.pinned_note = function(pin_id,pinvalue,archiveval)
 {
+  //$rootScope.notedata[9]="pavan you pinned the note";
   var url = "/pinnote/" + pin_id + "";
      var action = "POST";
      var data = {
-       value: pinvalue
+       value: pinvalue,
+        removearchive: archiveval
      }
      todoService.app(url, action, data).then(function(data) {
-       console.log(data.data.status);
+       //console.log(data.data.status);
+         toastr.success("note has been pinned");
        $rootScope.getData11();
      }).catch(function(error) {
        console.log(error);
@@ -313,6 +358,7 @@ $scope.pinned_note = function(pin_id,pinvalue)
 
 $scope.update = function(id11)
 {
+  //$rootScope.noteData="pavan you updated the note";
   var title1 = $scope.modelheader;
   var body = $scope.modelbody;
   //console.log(id1);
@@ -324,6 +370,7 @@ $scope.update = function(id11)
   var httpobj = dataupdation.update(data);
   httpobj.then(function(response)
 {
+//toastr.success("note has updated");
   $scope.getData11();
 },function(response)
 {
@@ -347,7 +394,8 @@ $scope.getData11();
           if(response.data.status==false)
           {
           //$state.go("home");
-          alert("logout success");
+        //  alert("logout success");
+          toastr.success("successfully logout");
           $location.path("/login");
         }
       //   else {
@@ -356,7 +404,7 @@ $scope.getData11();
       //   }
           // $scope.user="";
 
-        console.log(response);
+        //console.log(response);
       }, function(response) {
           // this function handles error
       });
@@ -364,6 +412,7 @@ $scope.getData11();
 
   $scope.done = function()
   {
+  //  $rootScope.activity[10]="pavan you added new note";
   $scope.myvalue=false;
   var body=$scope.body11;
   var tit=$scope.title;
@@ -386,6 +435,7 @@ $scope.getData11();
     console.log(response);
     $scope.title="";
       $scope.body11="";
+        toastr.success("note has been added");
       $scope.getData11();
   },function(response)
   {
@@ -436,7 +486,7 @@ this.delete = function(id)
   })
 }
 });
-app.service("getcardData",function($http)
+app.service("getcardIn",function($http)
 {
 this.getData11=function()
 {

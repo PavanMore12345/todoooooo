@@ -33,9 +33,9 @@ module.exports = function(passport) {
             User.findOne({
                 'google.id': profile.id
             }, function(err, user) {
-                console.log("google profile:", profile.photos);
+                //console.log("google profile:", profile.photos);
 
-                console.log(typeof profile.photos);
+                //console.log(typeof profile.photos);
                 // if there is an error, stop everything and return that
                 // ie an error connecting to the database
                 // if (err)
@@ -63,7 +63,7 @@ module.exports = function(passport) {
                     newUser.google.gender = profile.gender;
                     // newUser.google.profile = profile.picture;
                     // save our user to the database
-                    console.log("email....",newUser.google.email);
+                    //console.log("email....",newUser.google.email);
                     newUser.save(function(err) {
                         if (err)
                             throw err;

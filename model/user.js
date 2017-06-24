@@ -8,8 +8,6 @@ var connect1 = mongo.connect('mongodb://127.0.0.1/mydb2');
 autoIncrement.initialize(connect1);
 var Schema = mongo.Schema;
 var userSchema = Schema({
-
-
   _id:
    {
      type: Number,
@@ -127,34 +125,34 @@ userSchema.statics.uploadProfilePic = function(userId, url, cb) {
         }
     });
   }
-    userSchema.statics.getUserData = function(id,callback)
-                {
-    console.log("id is", id);
-                    User.find({id1:id},callback);
-                  }
-                  userSchema.virtual('u_id').get(function() {
-                      return this.id.toString();
-                  });
-                  userSchema.set('toJSON', {
-                      virtuals: true,
-                      transform: function(doc, ret, options) {
-                          ret.u_id = ret._id;
-
-                          if(ret.fb||ret.google||ret.local)
-                          if (ret.fb && ret.fb.profile) {
-                              ret.fb.profile = JSON.parse(ret.fb.profile);
-                          }
-                          else
-                          if (ret.google && ret.google.profile) {
-                              ret.google.profile = JSON.parse(ret.google.profile);
-                          }
-                          else
-                          if (ret.local && ret.local.profile) {
-                              ret.local.profile = JSON.parse(ret.local.profile);
-                          }
-                          delete ret._id;
-                          return ret;
-                      }
-                  });
+    // userSchema.statics.getUserData = function(id,callback)
+    //             {
+    // console.log("id is", id);
+    //                 User.find({id1:id},callback);
+    //               }
+    //               userSchema.virtual('u_id').get(function() {
+    //                   return this.id.toString();
+    //               });
+    //               userSchema.set('toJSON', {
+    //                   virtuals: true,
+    //                   transform: function(doc, ret, options) {
+    //                       ret.u_id = ret._id;
+    //
+    //                       if(ret.fb||ret.google||ret.local)
+    //                       if (ret.fb && ret.fb.profile) {
+    //                           ret.fb.profile = JSON.parse(ret.fb.profile);
+    //                       }
+    //                       else
+    //                       if (ret.google && ret.google.profile) {
+    //                           ret.google.profile = JSON.parse(ret.google.profile);
+    //                       }
+    //                       else
+    //                       if (ret.local && ret.local.profile) {
+    //                           ret.local.profile = JSON.parse(ret.local.profile);
+    //                       }
+    //                       delete ret._id;
+    //                       return ret;
+    //                   }
+    //               });
 var User = connect1.model('User', userSchema);
 module.exports=User;

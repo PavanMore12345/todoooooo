@@ -23,8 +23,9 @@ router.use('/signup',require('./signup'));
 router.use('/login',require('./login'));
 router.use('/checklogin',require('./checklogin'));
 router.use('/logout',require('./logout'));
-router.use('/deletecard',require('./deletecard'));
+router.use('/deletecard',require('./authenticate'),require('./deletecard'));
 router.use('/imageload',require('./imageload'));
+router.use('/activity',require('./authenticate'),require('./activity'));
 //router.use('/getDataById',require('./getDataById'));
 router.use('/updatecard',require('./updatecard'));
 router.use('/setcolor',require('./setcolor'));
@@ -38,13 +39,14 @@ router.use('/getuserdata',require('./authenticate'),require('./getuserdata'));
 router.use('/userprofile',require('./authenticate'),require('./userprofile'));
 //router.use('/deletecard',require('./notecard'));
 router.use('/reminders',require('./reminders'));
-router.use('/pinnote',require('./pinnote'));
+router.use('/removeReminder',require('./removeReminder'));
+router.use('/pinnote',require('./authenticate'),require('./pinnote'));
 //router.use('/',require('./addcard'))
 // router.get('/auth/facebook',
 //     passport.authenticate('facebook', {
 //         scope: ['email','public_profile','user_photos','publish_actions','user_status']
 //     }));
-    router.use('/archieve',require('./archieve'));
+    router.use('/archieve',require('./authenticate'),require('./archieve'));
 router.get('/facebook/callback',facebookSignInCallback);
 function facebookSignInCallback(req, res, next) {
   //  passport = req.passport.instance;

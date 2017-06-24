@@ -1,13 +1,15 @@
-<div ng-class:"divchange" class="row">
-<!-- <div id="pinned">pinned</div> -->
-<div ng-class ="class"  ng-repeat="x in records| filter:query as results track by $index" ng-if='x.archive&&!x.pin_note' >
+<!-- <div > others</div> -->
+<div ng-class="divchange" class="row">
 
+<div ng-class ="class"  ng-repeat="x in records| filter:query as results track by $index"  ng-if='!x.pin_note&&x.archive'  >
 <div class="w3-panel w3-card" id="card" style="background-color:{{x.color}}" ng-mouseleave="open = false;colorHover=false" ng-mouseenter="open = true;" >
- <a ng-click=pinned_note(x._id,'false') ><img src="image/icons8-Pin.png" uib-tooltip="unpinnote" tooltip-placement="bottom" style="top:0;float:right;"></a>
-<div class ="title" ng-bind-html="x.title" style="padding-left:14px;font-size:14px;font-weight:bold;"></div>
+ <a ng-click=pinned_note(x._id,'true') ><img src="image/icons8-Pin-20.png" ng-show="open==true"  style="top:0;float:right" uib-tooltip="pinnote" tooltip-placement="bottom"></a>
+<div class ="title" ng-bind-html="x.title" style="padding-left:14px;padding-top:10px;font-size:14px;font-weight:bold;"></div>
 <br>
+
+
 <div class="body" ng-bind-html="x.bodyContent" ng-click="updateData(x._id,x.title,x.bodyContent)" data-target="#myModal" data-toggle="modal" style="padding-left:14px;font-size:14px">
-  </div>
+<br/>  </div>
 <div ng-show="open == true">
 
 <div class="btn-group" uib-dropdown dropdown-append-to-body>
@@ -40,7 +42,7 @@
   </span>
     </div>
     <!-- <img src="image/clock.png"></img> pick date & time</a> -->
-    <img src="image/archieve.png" ng-click="archive_notes(x._id,'false')" uib-tooltip="unarchive" tooltip-placement="bottom" tooltip-append-to-body=true style="padding-left:10px;">
+    <img src="image/archieve.png"  style="padding-left:10px;"  ng-click="archive_notes(x._id,'false')" uib-tooltip="unarchive" tooltip-placement="bottom"tooltip-append-to-body=true>
     </img>
 
     <div class="dropdown">

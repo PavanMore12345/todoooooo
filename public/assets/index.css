@@ -12,6 +12,19 @@
 	margin: 0 auto;
 	margin-top:07%
 	}
+	.left-col {
+	  width: 50%;
+	  min-height: 50px;
+	  border-right: 1px solid black;
+	  float: left;
+	  box-sizing: border-box;
+	}
+
+	.right-col {
+	  width: 50%;
+	  min-height: 50px;
+	  float: right;
+	}
 	#todo
 	{
 	color: black !important;

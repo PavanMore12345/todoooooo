@@ -6,8 +6,9 @@ app.controller('signupController',function($scope,$location,signupService,$state
                 var httpobj = signupService.signupPage(user);
                 httpobj.then(function(response) {
                     console.log(response);
-                    alert("signup success");
+                    //alert("signup success");
                     //$state.go("login");
+                  toastr.success("signup success");
                     $state.go('login');
                 }, function(response) {
                     // this function handles error

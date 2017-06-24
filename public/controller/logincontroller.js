@@ -10,7 +10,8 @@ app.controller('loginController', function($scope,$location,loginService,$state)
                     if(response.data.status)
                     {
                     //$state.go("home");
-                    alert("login success");
+                    //alert("login success");
+                    toastr.success("login success");
                     $state.go('todo');
                     // $state.go("todopage");
                   }

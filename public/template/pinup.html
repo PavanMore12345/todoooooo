@@ -1,10 +1,10 @@
-<div ng-class:"divchange" class="row">
+<div ng-class:"divchange" class="row" ng-show="!booleanval">
 <div id="pinned">pinned</div>
 <div ng-class ="class"  ng-repeat="x in records| filter:query as results track by $index" ng-if='x.pin_note&&!x.archive' >
 
 <div class="w3-panel w3-card" id="card" style="background-color:{{x.color}}" ng-mouseleave="open = false;colorHover=false" ng-mouseenter="open = true;" >
  <a ng-click=pinned_note(x._id,'false') ><img src="image/icons8-Pin.png" uib-tooltip="unpinnote" tooltip-placement="bottom" style="top:0;float:right;"></a>
-<div class ="title" ng-bind-html="x.title" style="padding-left:14px;font-size:14px;font-weight:bold;"></div>
+<div class ="title" ng-bind-html="x.title" style="padding-left:14px;padding-top:10px;font-size:14px;font-weight:bold;"></div>
 <br>
 <div class="body" ng-bind-html="x.bodyContent" ng-click="updateData(x._id,x.title,x.bodyContent)" data-target="#myModal" data-toggle="modal" style="padding-left:14px;font-size:14px">
   </div>
@@ -40,7 +40,7 @@
   </span>
     </div>
     <!-- <img src="image/clock.png"></img> pick date & time</a> -->
-    <img src="image/archieve.png"  style="padding-left:10px;">
+    <img src="image/archieve.png" ng-click="archive_notes(x._id,'true')"  style="padding-left:10px;">
     </img>
 
     <div class="dropdown">
@@ -66,7 +66,7 @@
     <div id="color" ng-show="colorHover" ng-mousehover="colorHover=true" ng-mouseleave="colorHover=false">
 
         <a href ng-click="changeColor(x._id,y.color)" ng-repeat="y in color">
-            <img uib-tooltip={{y.tooltip}} tooltip-placement="bottom" ng-src={{y.path}} style="padding-left:8px;padding-top:8px"></img>
+        <img uib-tooltip={{y.tooltip}} tooltip-placement="bottom" ng-src={{y.path}} style="padding-left:8px;padding-top:8px"></img>
         </a>
     </div>
 
