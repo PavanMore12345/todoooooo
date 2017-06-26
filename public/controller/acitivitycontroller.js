@@ -3,6 +3,7 @@ app.controller('activityController', ['$scope','$controller','getcardData', func
   $controller('todoController', {$scope: $scope})
     $scope.booleanval=true;
     console.log("activity");
+      $scope.navbar11={'background-color':'#1CEAE7'};
   $scope.getDataInfo = function()
 {
   console.log("get");

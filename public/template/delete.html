@@ -1,0 +1,19 @@
+<div ng-class="divchange" class="row">
+<div ng-class ="class"  ng-repeat="x in records| filter:query as results track by $index"  ng-if='!x.pin_note && !x.archive'>
+<div class="w3-panel w3-card" id="card" style="background-color:{{x.color}}" ng-mouseleave="open = false;" ng-mouseenter="open = true;">
+  <div class ="title" ng-bind-html="x.title" style="padding-left:14px;padding-top:10px;font-size:14px;font-weight:bold;"></div>
+  <br>
+  <div class="body" ng-bind-html="x.bodyContent" style="padding-left:14px;font-size:14px">
+  <br/>  </div>
+  <div ng-show="open == true">
+  <div class="btn-group" uib-dropdown dropdown-append-to-body>
+  <img src="image/list.png"  ng-click="dropdown()" class="dropbtn" style="padding-left:10px;" uib-dropdown-toggle></img>
+  <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
+  <li role="menuitem"><a ng-click="delete(x._id)">delete forever</a></li>
+  <li role="menuitem"><a ng-click="restore(x.id,'bin',false)">restore</a></li>
+  </ul>
+  </div>
+</div>
+</div>
+</div>
+</div>

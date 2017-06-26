@@ -29,7 +29,11 @@ var app = angular.module('app', ['ui.router','ngSanitize', 'ui.bootstrap', 'ui.b
          url: '/activity',
          templateUrl: 'template/todo.html',
           controller: 'activityController',
-        })
+        }).state('delete', {
+          url: '/deletedata',
+          templateUrl: 'template/delete.html',
+           controller: 'deleteController',
+         })
     $urlRouterProvider.otherwise('/todo');
   })
        app.directive('contenteditable1', [function() {

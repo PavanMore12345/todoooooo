@@ -4,7 +4,6 @@ var validators= require('mongoose-validators');
 var mongooseFieldEncryption = require('mongoose-field-encryption').fieldEncryption;
 var mongooseFieldEncryption1 = require('mongoose-field-encryption');
 var connect1 = mongo.connect('mongodb://127.0.0.1/mydb2');
-
 autoIncrement.initialize(connect1);
 var Schema = mongo.Schema;
 var userSchema = Schema({
@@ -94,9 +93,9 @@ self.findOne({email:data.email},function(err,exist)
   else
    {
     var newUser=new self(data);
-    console.log("obj",newUser);
+    //console.log("obj",newUser);
     newUser.save(callback);
-    console.log("sdfsfs");
+  //  console.log("sdfsfs");
   }
 });
 }

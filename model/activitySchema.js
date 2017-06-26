@@ -1,9 +1,9 @@
 var express = require('express'),
     app = express(),
-    router = express.Router();
-var mongo = require('mongoose');
-var connect1 = mongo.createConnection('mongodb://127.0.0.1/mydb2');
-var Schema = mongo.Schema;
+    router = express.Router(),
+   mongoose = require('mongoose'),
+  connection = require("../config/index");
+var Schema = mongoose.Schema;
 var logSchema = Schema({
     id1: {
         type: Number
@@ -37,5 +37,5 @@ logSchema.statics.getCardInfo=function(id,callback)
 console.log("id is", id);
                 activity.find({id1:id},callback);
         }
-var activity = connect1.model('activity', logSchema);
+var activity = mongoose.model('activity', logSchema);
 module.exports = activity;

@@ -47,6 +47,7 @@ router.use('/pinnote',require('./authenticate'),require('./pinnote'));
 //         scope: ['email','public_profile','user_photos','publish_actions','user_status']
 //     }));
     router.use('/archieve',require('./authenticate'),require('./archieve'));
+    router.use('/deletedata',require('./authenticate'),require('./deletedata'));
 router.get('/facebook/callback',facebookSignInCallback);
 function facebookSignInCallback(req, res, next) {
   //  passport = req.passport.instance;

@@ -1,4 +1,4 @@
-app.controller('todoController',function($scope,$window,$location,toastr,$uibModal,$rootScope,todoService,$timeout,logoutService,datainsertion,getcardIn,datadeletion,dataupdation,colorchange,copyContent)
+app.controller('todoController',function($scope,$window,$location,toastr,$uibModal,$rootScope,todoService,$timeout,logoutService,datainsertion,getcardIn,datadeletion,colorchange,copyContent)
 {
   //$scope.class="col-sm-6 col-lg-4 col-lg-12 item"
   //console.log($scope.open);
@@ -6,6 +6,7 @@ app.controller('todoController',function($scope,$window,$location,toastr,$uibMod
 var notedata;
 $scope.booleanval=false;
  $scope.booleanvalue=true;
+ $scope.deleteval=false;
   var colorObj=[
   {
     "color":"fff",
@@ -68,8 +69,85 @@ var modalInstance = $uibModal.open({
   // controllerAs: "$ctrl",
   size: 'lg',
 });
-
 }
+// $scope.del = function(id) {
+//           var del = todoService.app("/deletecard/" + id + "", "delete");
+//           del.then(function(out) {
+//               if (out.data.status == true) {
+//                   toastr.success("successfully deleted");
+//
+//                   $scope.card();
+//               }
+//           }).catch(function(error) {
+//               console.log(error);
+//           })
+//       }
+//var $ctrl = this;
+     $scope.openmodal = function(data) {
+         // console.log(data);
+         var model = $uibModal.open({
+             templateUrl: "template/popupModal.html",
+             size: 'md',
+             controller: function($uibModalInstance) {
+                 this.updatetitle = data.title;
+                 this.updatecontent = data.bodyContent;
+
+                 this.date = data.updated_at;
+                 this.id = data._id;
+                 var color = data.color;
+                 //console.log("color",color);
+                 this.modalColor = {
+                     "background-color":color
+                 }
+                 //  console.log(this);
+
+                 //update function for model
+                 this.update = function() {
+                     var $ctrl = this;
+                     // console.log("update");
+                     console.log(this.updatetitle);
+                     var tit = $ctrl.updatetitle;
+                     var cont = $ctrl.updatecontent;
+                     var cardData = {};
+                     cardData["title"] = tit;
+                     cardData["bodyContent"] = cont;
+                     // console.log(cardData);
+                     if (data.title == tit && data.bodyContent == cont) {
+                         $uibModalInstance.close();
+                         return;
+                     }
+                     if (tit == "" && cont == "" || tit == undefined && cont == undefined || tit == null && cont == null) {
+                         //$scope.del(this.id);
+                         $uibModalInstance.close();
+                         return;
+                     }
+                     var log = todoService.app("/updatecard/" + this.id + "", "post", cardData);
+                     log.then(function(out) {
+                         if (out.data.status == true) {
+                             console.log("check");
+                             $scope.refresh();
+                               //$rootScope.getData11();
+                         }
+                     }).catch(function(error) {
+                         console.log(error);
+                     })
+                     $uibModalInstance.close();
+                 }
+                 // ngclick remove function for model
+                 this.remove = function() {
+                     $scope.del(this.id);
+                     $uibModalInstance.close();
+                 };
+                 //handling the error
+                 model.result.catch(function(error) {
+                     $uibModalInstance.close();
+                 }).then(function(data) {
+
+                 });
+             },
+             controllerAs: "$ctrl"
+         });
+     };
 $scope.listview = function() {
     localStorage.setItem("view", "list");
     // $scope.showgrid = false;
@@ -141,6 +219,25 @@ $scope.archive_notes = function(note_id, archiveval) {
       toastr.success("note has archieved");
     $rootScope.getData11();
 
+  }).catch(function(error) {
+    console.log(error);
+  })
+}
+$scope.delete_note = function(note_id, deleteval) {
+  //  $rootScope.notedata[0]="pavan you selected Archive ";
+  //console.log("archieve");
+  var url = "/deletedata/" + note_id + "";
+  var action = "POST";
+  var data = {
+    value: deleteval
+  }
+  console.log(url);
+  console.log(data);
+  todoService.app(url, action, data).then(function(data) {
+    console.log(data.data.status);
+    // toastr.info('Note Archieved Successfully');
+      toastr.success("note has deleted");
+    $rootScope.getData11();
   }).catch(function(error) {
     console.log(error);
   })
@@ -496,18 +593,18 @@ method:"post"
   })
 }
 });
-app.service("dataupdation",function($http)
-{
-this.update=function(udata)
-{
-  console.log(udata);
-return $http({
-url:"/updatecard",
-method:"post",
-data:udata
-  })
-}
-});
+// app.service("dataupdation",function($http)
+// {
+// this.update=function(udata)
+// {
+//   console.log(udata);
+// return $http({
+// url:"/updatecard",
+// method:"post",
+// data:udata
+//   })
+// }
+// });
 app.service("colorchange",function($http)
 {
 this.changeColor=function(id,color)

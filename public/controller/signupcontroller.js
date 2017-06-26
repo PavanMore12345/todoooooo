@@ -1,4 +1,4 @@
-app.controller('signupController',function($scope,$location,signupService,$state) {
+app.controller('signupController',function($scope,$location,signupService,$state,toastr) {
             $scope.signupPage = function() {
               console.log("SDfssds");
                 var user = $scope.user;

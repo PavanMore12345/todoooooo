@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 
-<link rel="stylesheet" href="assets/todo.css">
 
 <body id="body1">
 <nav class="navbar navbar-inverse navbar-fixed-top" ng-style="navbar11" role="navigation">
@@ -17,8 +16,9 @@
                 <a class="navbar-brand" id="menu-toggle"><img src="image/menu.svg"></img></a>
                 <!-- <a class="navbar-brand" href="#"><span id="google"><b>Google</b>Keep</span> -->
                 <!-- <span id="google" ng-show="!booleanvalue"><b>Archive</b></span> -->
-                <span id="google" ng-show="booleanvalue"><b>Google</b> keep</span>
-                <!-- <span id="google" ng-show="!booleanvalue"><b>Activities</b></span> -->
+                <span id="google" ng-show="booleanvalue" ng-hide="booleanval"><b>Google</b> keep</span>
+                <span id="google" ng-show="booleanval"><b>Activities</b></span>
+                <span id="google" ng-show="deleteval"><b>Trash</b></span>
             </div>
 
             <div class="collapse navbar-collapse" id="myNavbar">
@@ -101,7 +101,7 @@
                     <a style="color:black"><img src="image/icons8-Hand Up-20.png" style="padding-left:28px;"></img>&nbsp reminders</a>
                 </li>
                 <li>
-                    <a style="color:black"><img src="image/icons8-Trash Can-20.png" style="padding-left:28px;"></img>&nbsp Trash</a>
+                    <a style="color:black" ui-sref="delete"><img src="image/icons8-Trash Can-20.png" style="padding-left:28px;"></img>&nbsp Trash</a>
                 </li>
                 <li>
                     <a style="color:black" ui-sref="archive">  <img src="image/archieve.png" style="padding-left:28px;"></img>&nbsp Archive</a>
@@ -129,21 +129,20 @@
                         </div>
                     </div>
                     <!-- <div class="row"> -->
-
-
                               <div class="row" style="margin-top:30px;">
                                <div ng-show="booleanvalue" ng-include="'template/pinup.html'"></div>
                                <div ng-show="booleanvalue" ng-include="'template/card.html'"></div>
                                <div ng-hide="booleanvalue" ng-include="'template/archieve.html'"></div>
-                               <div ng-show="booleanval" ng-include="'template/activity.html'"></div>
+                               <div ng-show="booleanval"  ng-include="'template/activity.html'"></div>
+                               <div ng-show="deleteval"  ng-include="'template/delete.html'"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="myModal" role="dialog" ng-show="myval">
+            <!-- <div class="modal fade" id="myModal" role="dialog" ng-show="myval">
                 <div class="modal-dialog">
                     <!-- Modal content-->
-                    <div class="modal-content">
+                    <!-- <div class="modal-content">
                         <div class="modal-header" contenteditable1 contenteditable="true" id="modelheader" placeholder="title" ng-model="modelheader">
                         </div>
                         <div class="modal-body" contenteditable1 contenteditable="true" id="modelbody" placeholder="take a note" ng-model="modelbody">
@@ -152,8 +151,8 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal" id="editdone" ng-click="update()">done</button>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> -->
+            <!-- </div> -->
         </div>
     </div>
     <script>

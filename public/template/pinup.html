@@ -4,9 +4,9 @@
 
 <div class="w3-panel w3-card" id="card" style="background-color:{{x.color}}" ng-mouseleave="open = false;colorHover=false" ng-mouseenter="open = true;" >
  <a ng-click=pinned_note(x._id,'false') ><img src="image/icons8-Pin.png" uib-tooltip="unpinnote" tooltip-placement="bottom" style="top:0;float:right;"></a>
-<div class ="title" ng-bind-html="x.title" style="padding-left:14px;padding-top:10px;font-size:14px;font-weight:bold;"></div>
+<div class ="title" ng-click="openmodal(x)" ng-bind-html="x.title" style="padding-left:14px;padding-top:10px;font-size:14px;font-weight:bold;"></div>
 <br>
-<div class="body" ng-bind-html="x.bodyContent" ng-click="updateData(x._id,x.title,x.bodyContent)" data-target="#myModal" data-toggle="modal" style="padding-left:14px;font-size:14px">
+<div class="body" ng-bind-html="x.bodyContent" data-target="#myModal" data-toggle="modal" style="padding-left:14px;font-size:14px">
   </div>
 <div ng-show="open == true">
 

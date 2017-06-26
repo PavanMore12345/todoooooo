@@ -1,4 +1,4 @@
-app.controller('mainController', function($http,$state,$scope,$rootScope) {
+app.controller('mainController', function($http,$state,$scope,$rootScope,toastr) {
   var url='/userprofile';
   $http.post(url)
 .then(

@@ -58,7 +58,7 @@ cardSchema.statics.setColors = function(id,color, cb) {
     this.findById(id, function(err, user) {
           // console.log("inside function",color);
         if (user) {
-             console.log("user",user);
+            // console.log("user",user);
             // console.log(bodyData);
             // var note=new noteInfo();
             // note.id1=user.id1;
@@ -167,75 +167,91 @@ cardSchema.statics.addCardData = function(data, callback) {
     note.save().then(function(out){
       //console.log("resultDASCSDVDS",out);
     }).catch(function(err){
-      console.log("err",err);
+      //console.log("err",err);
     })
     card.save(callback);
 }
 cardSchema.statics.getCard=function(id,callback)
             {
-console.log("id is", id);
+//console.log("id is", id);
                 User.find({id1:id},callback);
               }
-  cardSchema.statics.deleteCardData=function(id,callback)
-  {
+  // cardSchema.statics.deleteCardData=function(id,callback)
+  // {
+  //   this.findById(id, function(err, user) {
+  //     console.log("user",user);
+  //   var note = new noteInfo({
+  //       id1:user.id1,
+  //     data:user.title+"deleted card "
+  //
+  //   });
+  //   note.save().then(function(out){
+  //     //console.log("resultDASCSDVDS",out);
+  //   }).catch(function(err){
+  //     console.log("err",err);
+  //   })
+  //   User.remove({_id:id},callback);
+  // });
+  //
+  // }
+  cardSchema.statics.update = function(bodyData, id, callback) {
+    if (bodyData.title == undefined && bodyData.bodyContent == undefined) {
+        //callback("input undefine", null);
+        return;
+    }
     this.findById(id, function(err, user) {
-      console.log("user",user);
-    var note = new noteInfo({
-        id1:user.id1,
-      data:user.title+"deleted card "
-
+        if (user) {
+            user.title = bodyData.title;
+            user.bodyContent = bodyData.bodyContent;
+            //sending callback to controller
+            user.save(callback);
+        } else {
+          //  callback('cant update', err);
+        }
     });
-    note.save().then(function(out){
-      //console.log("resultDASCSDVDS",out);
-    }).catch(function(err){
-      console.log("err",err);
-    })
-    User.remove({_id:id},callback);
-  });
-
-  }
+};
   cardSchema.statics.getCardData=function(id,callback)
   {
-    console.log("iddddd",id);
+    //console.log("iddddd",id);
     User.find({_id:id},callback);
   }
-  cardSchema.statics.updateCardData=function(data,callback)
-  {
-    // console.log("abccccccccccc");
-    // var self = this;
-    // var card = new self({
-    //     title:data.title,
-    //     bodyContent:data.bodyContent
-    // });
-    console.log(data);
-    var note = new noteInfo({
-        id1:user.id1,
-        data:user.title+" upadated the card "
-    });
-    note.save().then(function(out){
-      console.log("resultDASCSDVDS",out);
-    }).catch(function(err){
-      console.log("err",err);
-    })
-    console.log(data);
-     User.update({ _id: data.id }, { $set: {title:data.title,bodyContent:data.bodyContent}},callback);
-    // card.save(callback);
-  }
+  // cardSchema.statics.updateCardData=function(data,callback)
+  // {
+  //   // console.log("abccccccccccc");
+  //   // var self = this;
+  //   // var card = new self({
+  //   //     title:data.title,
+  //   //     bodyContent:data.bodyContent
+  //   // });
+  //   console.log(data);
+  //   var note = new noteInfo({
+  //       id1:user.id1,
+  //       data:user.title+" upadated the card "
+  //   });
+  //   note.save().then(function(out){
+  //     //console.log("resultDASCSDVDS",out);
+  //   }).catch(function(err){
+  //     //console.log("err",err);
+  //   })
+  //   console.log(data);
+  //    User.update({ _id: data.id }, { $set: {title:data.title,bodyContent:data.bodyContent}},callback);
+  //   // card.save(callback);
+  // }
   cardSchema.statics.pinnedData= function(note_id,booleanvalue,id, callback)
   {
-  console.log("Boolean value",booleanvalue);
-  this.findById(note_id, function(err, user) {
-  var note = new noteInfo({
-      id1:id,
-      data:user.title+" pinned the card"
-  });
-  note.save().then(function(out){
-    console.log("resultDASCSDVDS",out);
-  }).catch(function(err){
-    console.log("err",err);
-  })
-});
-  console.log("callback",callback);
+  //console.log("Boolean value",booleanvalue);
+//   this.findById(note_id, function(err, user) {
+//   var note = new noteInfo({
+//       id1:id,
+//       data:user.title+" pinned the card"
+//   });
+//   note.save().then(function(out){
+//     //console.log("resultDASCSDVDS",out);
+//   }).catch(function(err){
+//     //console.log("err",err);
+//   })
+// });
+  //console.log("callback",callback);
   this.update({
     _id: note_id
   }, {
@@ -246,12 +262,35 @@ pin_note:booleanvalue.value,
   }, callback);
   //console.log("user",user);
 }
-cardSchema.statics.archiveNote= function(noteId,booleanvalue,id,callback) {
-  // console.log("Archive val",booleanvalue);
+cardSchema.statics.archiveNote = function(noteId,booleanvalue,id,callback) {
+   console.log("Archive val",booleanvalue);
   this.findById(noteId, function(err, user) {
   var note = new noteInfo({
       id1:id,
       data:user.title+" archieved the Note "
+  });
+  note.save().then(function(out){
+    // console.log("resultDASCSDVDS",out);
+  }).catch(function(err){
+    //console.log("err",err);
+  })
+});
+  this.update({
+    _id: noteId
+  }, {
+    $set: {
+      archive:booleanvalue.value,
+     pin_note:booleanvalue.pin
+    }
+  }, callback);
+}
+cardSchema.statics.deleteNote = function(noteId,deleteval,id,callback) {
+  // console.log("Archive val",booleanvalue);
+  console.log("delete",deleteval);
+  this.findById(noteId, function(err, user) {
+  var note = new noteInfo({
+      id1:id,
+      data:user.title +" deleted the Note "
   });
   note.save().then(function(out){
     // console.log("resultDASCSDVDS",out);
@@ -263,8 +302,7 @@ cardSchema.statics.archiveNote= function(noteId,booleanvalue,id,callback) {
     _id: noteId
   }, {
     $set: {
-      archive:booleanvalue.value,
-     pin_note:booleanvalue.pin
+      deletenote:deleteval.value
     }
   }, callback);
 }

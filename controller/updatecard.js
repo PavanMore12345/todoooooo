@@ -1,48 +1,49 @@
-var express = require('express'),
-    app = express(),
-    router = express.Router(),
-    updatecard = require('../model/cardSchema');
+var express = require("express");
+var app = express();
+var router = express.Router();
+var userData = require("../model/cardSchema");
+var conn = require("../config");
+var winston=require("winston");
+var config = require("../config/config");
+//var db=config.nedb;
 
-router.post('/', function(req, res) {
-    //console.log(req.decoded);
-    //console.log("nvlvldsnlvdsnlv");
+router.post('/:id', function(request, response) {
+  winston.info("updateData API was called");
+
+    var bodyData = request.body;
+    // console.log("body",bodyData);
+    var info = request.params.id;
     try {
-        var data = {
-           id:req.body._id,
-            title: req.body.title,
-            bodyContent: req.body.bodyContent
-        }
-        console.log("data abc 22",data);
-        //console.log("HI HOW R U",req.params.id);
-        updatecard.updateCardData(data, function(err, data) {
-          console.log(err);
-            // console.log(data.id1);
-            try {
-              console.log(data);
-                if (err) {
-                    res.send({
-                        "status": false,
-                        "message": err
-                    });
-                    // console.log(err.errors);
-                } else {
-                    res.send({
-                        "status": true,
-                        "message": " updatecard successfully"
-                    });
-                }
-            } catch (e) {
-                res.send({
+        userData.update(bodyData,info, function(err, result) {
+            if (err) {
+                winston.error(err);
+                response.json({
                     "status": false,
-                    "message": "fail"
+                    "message": err
+                });
+            } else {
+              // winston.info("update successfully",{id: info});
+              var currentTime=new Date();
+              // var get=currentTime.getDate();
+
+              doc={message:"update successfully",user_id:result.user_id,time:currentTime};
+              // db.insert(doc, function(err, newDoc) {});
+
+                response.json({
+                    status: true,
+                    message: result,
                 });
             }
+
         });
-    } catch (e) {
-        res.send({
+        // Put Controler code here
+    } catch (error) {
+      winston.error(error);
+        response.send({
             "status": false,
-            "message": "server error"
+            "error": error
         });
+        return;
     }
 });
 module.exports = router;

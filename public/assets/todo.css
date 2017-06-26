@@ -540,6 +540,54 @@ margin-left: 20px;
   margin-top: 23px;
 margin-right: 32px;
 }
+#date {
+    /*width: 100%;*/
+    font-style: italic;
+    font-size: 12px;
+    margin-right: 9px;
+    color: rgba(0, 0, 0, .70);
+    float: right;
+    font-family: 'Roboto', arial, sans-serif;
+}
+.hideicon {
+    margin-left: 20px;
+}
+
+#date_height {
+    height: 22px;
+}
+#updatetitle, #updatecontent, #staticicon {
+    min-height: 40px;
+    padding: 2%;
+    padding-left: 5%;
+    font-size: 14px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: #fff;
+}
+
+#updatetitle {
+    font-size: 18px;
+    font-weight: bold;
+}
+#removeIcon {
+    float: right;
+    margin-right: 5px;
+    padding-top: 2px;
+}
+
+#updatecontent {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+#update {
+    margin-top: 20%;
+    width: 100%;
+    background-color: #fff;
+}
 
 #dropdownpic {
     width: 100px;

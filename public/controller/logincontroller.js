@@ -1,5 +1,5 @@
 // var app = angular.module('scotchApp', []);
-app.controller('loginController', function($scope,$location,loginService,$state) {
+app.controller('loginController', function($scope,$location,loginService,$state,toastr) {
             $scope.loginPage = function() {
               console.log("SDfssds");
                 var user = $scope.user;
