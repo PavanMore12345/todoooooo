@@ -1,7 +1,7 @@
-// var app = angular.module('scotchApp', []);
+/*loginController loaded when  route change */
 app.controller('loginController', function($scope,$location,loginService,$state,toastr) {
             $scope.loginPage = function() {
-              console.log("SDfssds");
+                //read the username and password
                 var user = $scope.user;
                 console.log(user);
                 var httpobj = loginService.loginPage(user);
@@ -9,25 +9,21 @@ app.controller('loginController', function($scope,$location,loginService,$state,
                  {
                     if(response.data.status)
                     {
-                    //$state.go("home");
-                    //alert("login success");
+                    //when data is matched it goes on todo page
                     toastr.success("login success");
                     $state.go('todo');
                     // $state.go("todopage");
                   }
                   else {
-                    // console.log("fgfgfd");
-                    // $location.path("/signup");
+                  //when email or password is wrong it will go on login page
                     $state.go('login');
                     $scope.user="";
                   }
-                    // $scope.user="";
+
                 }, function(response) {
-                    // this function handles error
+
                 });
             }
-
-
           });
           app.service("loginService", function($http) {
               this.loginPage = function(user) {

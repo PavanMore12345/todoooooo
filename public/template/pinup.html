@@ -8,7 +8,7 @@
 <br>
 <div class="body" ng-bind-html="x.bodyContent" data-target="#myModal" data-toggle="modal" style="padding-left:14px;font-size:14px">
   </div>
-<div ng-show="open == true">
+<div ng-show="open == true" style="padding-top:10px">
 
 <div class="btn-group" uib-dropdown dropdown-append-to-body>
 <span class="glyphicon glyphicon-hand-up" aria-hidden="true"  style="padding-left:10px;" uib-dropdown-toggle>
@@ -40,6 +40,10 @@
   </span>
     </div>
     <!-- <img src="image/clock.png"></img> pick date & time</a> -->
+      <a href ng-click="facebookshare(x)">
+    <img src="image/icons8-Share-20 (1).png" style="padding-left:10px;">
+    </img>
+  </a>
     <img src="image/archieve.png" ng-click="archive_notes(x._id,'true')"  style="padding-left:10px;">
     </img>
 
@@ -50,7 +54,7 @@
     <div class="btn-group" uib-dropdown dropdown-append-to-body>
 <img src="image/list.png"  ng-click="dropdown()" class="dropbtn" style="padding-left:10px;" uib-dropdown-toggle></img>
 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
-<li role="menuitem"><a ng-click="delete(x._id)">delete note</a></li>
+<li role="menuitem"><a ng-click="deleteCard(x._id)">delete note</a></li>
 <li role="menuitem"><a ng-click="copyData(x)">copy note</a></li>
 </ul>
 </div>

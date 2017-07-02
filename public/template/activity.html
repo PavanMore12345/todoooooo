@@ -1,10 +1,16 @@
-<div class="activity" ng-repeat= "x in records" ng-if='!x.pin_note&&!x.archive'>
-<div class='left-col'>
-  <div ng-if="$even">
-<div class ="msg" ng-bind-html="x.data" style="font-size:20px;font-weight:bold;"></div>
+<div id="date" ng-repeat="x in records track by $index">
+    <div id="activitydate" ng-show="$first" style="font-weight:italic">{{x.created_at|date:"mediumDate"}}</div>
 </div>
+<div class="activity" ng-repeat="x in records" ng-if='!x.pin_note&&!x.archive' style="background-color:white">
+
+    <br>
+    <div class="msg" style="padding-left:15px;padding-right:10px">
+        <i style="color:#0ba">{{x.title}}</i>
+        <i>&nbsp{{x.data}}</i>
+        <i style="float:right;color:#a6a6a6">{{x.created_at | date:"shortTime"}}</i>
+    </div>
+    <br>
+    <!-- <div class="msg" style="float:right"></div> -->
+    <div class='lazyload' lazyload></div>
+    <div style="border-bottom:1px dashed black;width:100%"></div>
 </div>
- <div class='right-col'>
-  <div ng-if="$odd">
-<div class = "msg1" ng-bind-html = "x.data" style="font-size:20px;font-weight:bold;padding-left:20px;">
-</div></div></div>

@@ -6,9 +6,9 @@
  <a ng-click=pinned_note(x._id,'true') ><img src="image/icons8-Pin-20.png" ng-show="open==true"  style="top:0;float:right" uib-tooltip="pinnote" tooltip-placement="bottom"></a>
 <div class ="title"  ng-bind-html="x.title" style="padding-left:14px; padding-top:10px;font-size:14px;font-weight:bold;"></div>
 <br>
-<div class="body" ng-bind-html="x.bodyContent" ng-click="openmodal(x)" style="padding-left:14px;font-size:14px">
+<div class="body" ng-bind-html="x.bodyContent" ng-click="openmodal(x)" style="padding-left:14px;font-size:14px:margin-top:10px">
   </div>
-<div ng-show="open == true">
+<div ng-show="open == true" style="padding-top:10px">
 
 <div class="btn-group" uib-dropdown dropdown-append-to-body>
 <span class="glyphicon glyphicon-hand-up" aria-hidden="true"  style="padding-left:10px;" uib-dropdown-toggle>
@@ -40,6 +40,10 @@
   </span>
     </div>
     <!-- <img src="image/clock.png"></img> pick date & time</a> -->
+    <a href ng-click="facebookshare(x)">
+    <img src="image/icons8-Share-20 (1).png"   style="padding-left:10px;">
+    </img>
+  </a>
     <img src="image/archieve.png"  style="padding-left:10px;"  ng-click="archive_notes(x._id,'true')" uib-tooltip="archive" tooltip-placement="bottom"tooltip-append-to-body=true>
     </img>
 
@@ -50,7 +54,7 @@
     <div class="btn-group" uib-dropdown dropdown-append-to-body>
 <img src="image/list.png"  ng-click="dropdown()" class="dropbtn" style="padding-left:10px;" uib-dropdown-toggle></img>
 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
-<li role="menuitem"><a ng-click="delete_note(x._id,'true')">delete note</a></li>
+<li role="menuitem"><a ng-click="deleteCard(x._id)">delete note</a></li>
 <li role="menuitem"><a ng-click="copyData(x)">copy note</a></li>
 </ul>
 </div>

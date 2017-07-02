@@ -1,41 +1,61 @@
+/*
+ * Activity Schema
+ * @path model/activitySchema.js
+ * @file activitySchema.js
+ */
 var express = require('express'),
     app = express(),
     router = express.Router(),
-   mongoose = require('mongoose'),
-  connection = require("../config/index");
+    mongoose = require('mongoose'),
+    connection = require("../config/index");
 var Schema = mongoose.Schema;
-var logSchema = Schema({
-    id1: {
+//schema for Activity
+var activitySchema = Schema
+({
+    id:
+    {
         type: Number
-        // unique: true
     },
-    data: {
+    data:
+    {
         type: String
     },
-    created_at: {
-  type:Date
-},
-},{
+    created_at:
+    {
+        type:Date
+    },
+    updated_at:
+    {
+        type: Date
+    },
+    title:
+    {
+        type:String
+    },
+}, {
     collection: "activityData"
 });
-logSchema.pre('save', function(next) {
-    // get the current date
-    // console.log("pre");
-    var currentDate = new Date();
+// hook method to set current time and updated time.
+activitySchema.pre('save', function(next)
+{
+  var currentDate = new Date();
 
     // change the updated_at field to current date
-    this.updated_at = currentDate;
+  this.updated_at = currentDate;
 
     // if created_at doesn't exist, add to that field
-    if (!this.created_at)
-        this.created_at = currentDate;
-
-    next();
+  if (!this.created_at)
+  this.created_at = currentDate;
+  next();
 });
-logSchema.statics.getCardInfo=function(id,callback)
+// save the activity into database
+activitySchema.statics.getCardInfo = function(id, callback)
+{
+    //console.log("id is", id);
+  activity.find(
       {
-console.log("id is", id);
-                activity.find({id1:id},callback);
-        }
-var activity = mongoose.model('activity', logSchema);
+        id: id
+      }, callback);
+}
+var activity = mongoose.model('activity', activitySchema);
 module.exports = activity;

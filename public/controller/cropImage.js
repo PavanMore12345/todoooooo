@@ -1,3 +1,4 @@
+/*when user select the image this controller is called*/
 app.controller('cropImage', function($scope, $rootScope, todoService,$uibModalInstance,getuuData) {
     $scope.myImage = $rootScope.changeProfilepic;
     $scope.myCroppedImage = '';
@@ -23,7 +24,7 @@ app.controller('cropImage', function($scope, $rootScope, todoService,$uibModalIn
     };
 
 
-
+   //it will set the image when image is selected.
     $scope.setImage = function() {
         // console.log("image path",$('#fileInput').val());
         var original = $scope.myImage;
@@ -36,8 +37,10 @@ app.controller('cropImage', function($scope, $rootScope, todoService,$uibModalIn
             "name":name
         }
         // console.log("image",file);
+        //imageload api is called.
         var upload = todoService.app("/imageload/" + $rootScope.user_id + "", "post", image);
         // console.log("asd");
+
         upload.then(function(out) {
           console.log(out);
             if (out.data.status == true) {
@@ -62,11 +65,11 @@ app.controller('cropImage', function($scope, $rootScope, todoService,$uibModalIn
 
 
         // console.log("check call",$scope.myCroppedImage);
-    }
+    } //getData function is called while image is loading
     $scope.getData = function()
   {
-    var httpobj12 = getuuData.getData();
-    httpobj12.then(function(response)
+    var httpob = getuuData.getData();
+    httpobj.then(function(response)
   {
     console.log("uploaded successfully");
     $scope.records=response.data.msg;
@@ -83,7 +86,7 @@ app.service("getuuData",function($http)
 this.getData=function()
 {
 return $http({
-url:"/getuserdata",
+url:"/getData",
 method:"post"
   })
 }

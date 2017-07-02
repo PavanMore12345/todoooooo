@@ -1,12 +1,12 @@
+/*todoController is loaded when user successfully login */
 app.controller('todoController',function($scope,$window,$location,toastr,$uibModal,$rootScope,todoService,$timeout,logoutService,datainsertion,getcardIn,datadeletion,colorchange,copyContent)
 {
-  //$scope.class="col-sm-6 col-lg-4 col-lg-12 item"
-  //console.log($scope.open);
-//  $scope.open = false;
 var notedata;
+$scope.archivenote = true;
 $scope.booleanval=false;
  $scope.booleanvalue=true;
- $scope.deleteval=false;
+ // this is color code when user select color it will set to card.
+ $scope.keep="GoogleKeep";
   var colorObj=[
   {
     "color":"fff",
@@ -49,15 +49,40 @@ $scope.booleanval=false;
     "tooltip":"Green"
   }
 ]
-$scope.hoverIn = function(){
-    this.open = true;
-};
-
-$scope.hoverOut = function(){
-    this.open = false;
-};
 $scope.color=colorObj;
 var $ctrl = this;
+//it will share title of the card on facebook
+$scope.facebookshare=function(todo){
+		console.log("facebook share")
+		FB.init({
+			appId : '1851117141877304',
+			status: true,
+			xfbml : true
+		});
+		 FB.ui({
+	           method: 'share_open_graph',
+	           action_type: 'og.shares',
+	           action_properties: JSON.stringify({
+	               object : {
+	                  // your url to share
+	                  'og:title': todo.title,
+	                  'og:description': todo.description,
+	                  /*'og:image': 'http://example.com/link/to/your/image.jpg'*/
+	               }
+	           })
+	           },
+	           // callback
+	           function(response) {
+	           if (response && !response.error_message) {
+	               // then get post content
+	               alert('successfully posted. Status id : '+response.post_id);
+	           } else {
+	               alert('Something went error.');
+	           }
+	       });
+
+	};
+//it is popup when user click to select image
 $scope.open = function ()
 {
 console.log('opening pop up');
@@ -70,19 +95,7 @@ var modalInstance = $uibModal.open({
   size: 'lg',
 });
 }
-// $scope.del = function(id) {
-//           var del = todoService.app("/deletecard/" + id + "", "delete");
-//           del.then(function(out) {
-//               if (out.data.status == true) {
-//                   toastr.success("successfully deleted");
-//
-//                   $scope.card();
-//               }
-//           }).catch(function(error) {
-//               console.log(error);
-//           })
-//       }
-//var $ctrl = this;
+// this popup will open when user  want to upadte data on card
      $scope.openmodal = function(data) {
          // console.log(data);
          var model = $uibModal.open({
@@ -133,12 +146,7 @@ var modalInstance = $uibModal.open({
                      })
                      $uibModalInstance.close();
                  }
-                 // ngclick remove function for model
-                 this.remove = function() {
-                     $scope.del(this.id);
-                     $uibModalInstance.close();
-                 };
-                 //handling the error
+
                  model.result.catch(function(error) {
                      $uibModalInstance.close();
                  }).then(function(data) {
@@ -148,12 +156,9 @@ var modalInstance = $uibModal.open({
              controllerAs: "$ctrl"
          });
      };
+//this function will call when user click on listview
 $scope.listview = function() {
     localStorage.setItem("view", "list");
-    // $scope.showgrid = false;
-    // $scope.showlist = true;
-  //  $scope.divchange="addCardList";
-  //$rootScope.notedata="pavan you selected listView ";
     $scope.class="col-lg-12 item";
     $scope.grid = {
         "display": "block"
@@ -162,14 +167,10 @@ $scope.listview = function() {
         "display": "none"
     }
 }
-
+//this function will call when user click on gridView
 $scope.gridview = function() {
     localStorage.setItem("view", "grid");
-    // $scope.showgrid = true;
-    // $scope.showlist = false;
-    //$scope.divchange="addCard";
-    //$rootScope.notedata="pavan you selected gridView ";
-    $scope.class=" col-md-4 item";
+    $scope.class="col-lg-4 col-md-6 col-sm-12 item";
     $scope.grid = {
         "display": "none"
     }
@@ -179,8 +180,6 @@ $scope.gridview = function() {
 }
 // checking fo;r the view in localStorage in every refresh
 if (localStorage.view == "list") {
-    // $scope.showlist = true;
-    // $scope.showSomething="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 card1"
     $scope.listview();
     $scope.grid = {
         "display": "block"
@@ -190,8 +189,6 @@ if (localStorage.view == "list") {
         "display": "none"
     }
 } else {
-    // $scope.showgrid = true;
-    // $scope.showSomething="col-xl-3 col-lg-4 col-sm-4 col-xs-12 card"
     $scope.gridview();
     $scope.grid = {
         "display": "none"
@@ -201,18 +198,16 @@ if (localStorage.view == "list") {
         "display": "block"
     }
 }
-$scope.archive_notes = function(note_id, archiveval) {
-  //  $rootScope.notedata[0]="pavan you selected Archive ";
-  console.log("archieve");
+//this function will call when user archive the card
+$scope.archive_notes = function(note_id, archiveval)
+ {
+  //it will send card id and archive value
+  //console.log("archieve");
   var url = "/archieve/" + note_id + "";
   var action = "POST";
-
   var data = {
     value: archiveval
   }
-
-  console.log(url);
-  console.log(data);
   todoService.app(url, action, data).then(function(data) {
     console.log(data.data.status);
     // toastr.info('Note Archieved Successfully');
@@ -223,25 +218,26 @@ $scope.archive_notes = function(note_id, archiveval) {
     console.log(error);
   })
 }
-$scope.delete_note = function(note_id, deleteval) {
-  //  $rootScope.notedata[0]="pavan you selected Archive ";
-  //console.log("archieve");
-  var url = "/deletedata/" + note_id + "";
-  var action = "POST";
-  var data = {
-    value: deleteval
-  }
-  console.log(url);
-  console.log(data);
-  todoService.app(url, action, data).then(function(data) {
-    console.log(data.data.status);
-    // toastr.info('Note Archieved Successfully');
-      toastr.success("note has deleted");
-    $rootScope.getData11();
-  }).catch(function(error) {
-    console.log(error);
-  })
-}
+//this function will call user click on delete card method
+// $scope.delete_note = function(note_id) {
+//   //  $rootScope.notedata[0]="pavan you selected Archive ";
+//   //console.log("archieve");
+//   var url = "/deletecard/" + note_id + "";
+//   var action = "POST";
+//   // var data = {
+//   //   value: deleteval
+//   // }
+//   console.log(url);
+//   //console.log(data);
+//   todoService.app(url, action).then(function(data) {
+//     console.log(data.data.status);
+//     // toastr.info('Note Archieved Successfully');
+//       toastr.success("note has deleted");
+//     $rootScope.getData11();
+//   }).catch(function(error) {
+//     console.log(error);
+//   })
+// }
 // $scope.get_notes = function(note_id, archiveval) {
 //   //  $rootScope.notedata[0]="pavan you selected Archive ";
 //   console.log("archieve");
@@ -273,6 +269,7 @@ $scope.delete_note = function(note_id, deleteval) {
 //   dataCon['bodyContent'] = content;
 //   addCard(dataCon);
 // }
+//this function will call user want to set reminder
 $scope.reminder = function(id, day, time) {
 //   $rootScope.notedata[1]="pavan you set reminder";
        var today = new Date();
@@ -312,6 +309,7 @@ $scope.reminder = function(id, day, time) {
            reminderCall(remind, id);
        }
    }
+   // this function will call when user delete the reminder
    $scope.deleteReminder=function(id){
      var remove=todoService.app("/removeReminder/" + id + "","post");
       //$rootScope.notedata[4]="pavan you  deleted reminder";
@@ -344,16 +342,16 @@ $scope.reminder = function(id, day, time) {
            console.log(error);
        })
    }
+  //when click on refresh button this function will call and page is loaded
 $scope.refresh = function()
 {
 //$rootScope.notedata[5]="pavan you refresh the page";
 $window.location.reload();
 }
+// this function will call when user want to copy the note
 $scope.copyData = function(data)
 {
-
-  //console.log("datacon",dataCon);
-//  $rootScope.notedata[6]="pavan you copied note";
+  //it will copy  the content from card create new card
   var title=data.title;
      var content=data.bodyContent;
      var color1 = data.color;
@@ -365,7 +363,7 @@ $scope.copyData = function(data)
   var httpobj1=copyContent.copydata(dataCon);
   httpobj1.then(function(response)
 {
-  console.log("res",response);
+  //console.log("res",response);
     toastr.success("note has copied");
     $scope.getData11();
 },function(response)
@@ -373,12 +371,13 @@ $scope.copyData = function(data)
 
 });
 }   //console.log(todo);
-
+//this function will call when user want to change the color
    $scope.changeColor =function(id,color)
    {
+       console.log("color",color);
   //   $rootScope.notedata[7]="pavan you changed the color";
-     console.log(id);
-     console.log("DEL");
+     //console.log(id);
+     //console.log("DEL");
      var httpobj123 = colorchange.changeColor(id,color);
      httpobj123.then(function(response)
    {
@@ -393,6 +392,7 @@ $scope.copyData = function(data)
     console.log("title");
     $scope.myvalue=true;
   }
+  // this function will print all the data.
   $rootScope.getData11 = function()
 {
   var httpobj12 = getcardIn.getData11();
@@ -422,12 +422,11 @@ $scope.copyData = function(data)
 //            }
 //        }
 //    };
-$scope.delete =function(id)
+//this function will call when user want to delete card.
+$scope.deleteCard =function(id)
 {
-  console.log(id);
-  console.log("DEL");
-  var httpobj123 = datadeletion.delete(id);
-  httpobj123.then(function(response)
+  var httpobj = datadeletion.delete(id);
+  httpobj.then(function(response)
 {
     toastr.success("note has been deleted");
   $scope.getData11();
@@ -435,9 +434,9 @@ $scope.delete =function(id)
 {
 });
 }
+//this function will call when user pinned the data.
 $scope.pinned_note = function(pin_id,pinvalue,archiveval)
 {
-  //$rootScope.notedata[9]="pavan you pinned the note";
   var url = "/pinnote/" + pin_id + "";
      var action = "POST";
      var data = {
@@ -453,37 +452,30 @@ $scope.pinned_note = function(pin_id,pinvalue,archiveval)
      })
 }
 
-$scope.update = function(id11)
-{
-  //$rootScope.noteData="pavan you updated the note";
-  var title1 = $scope.modelheader;
-  var body = $scope.modelbody;
-  //console.log(id1);
-  var data = {
-    id:id11,
-    title:title1,
-    bodyContent:body
-  }
-  var httpobj = dataupdation.update(data);
-  httpobj.then(function(response)
-{
-//toastr.success("note has updated");
-  $scope.getData11();
-},function(response)
-{
-});
-}
-$scope.updateData =function(id11,title,body)
-{
-  console.log("update");
-  $scope.myval = true;
-  $scope.modelheader = title;
-  $scope.modelbody = body;
-$scope.update(id11);
-}
+// $scope.update = function(id11)
+// {
+//   //$rootScope.noteData="pavan you updated the note";
+//   var title1 = $scope.modelheader;
+//   var body = $scope.modelbody;
+//   //console.log(id1);
+//   var data = {
+//     id:id11,
+//     title:title1,
+//     bodyContent:body
+//   }
+//   var httpobj = dataupdation.update(data);
+//   httpobj.then(function(response)
+// {
+// //toastr.success("note has updated");
+//   $scope.getData11();
+// },function(response)
+// {
+// });
+// }
 $scope.getData11();
+//this function will call when user want to logout
   $scope.logoutPage = function() {
-    console.log("SDfssds");
+    //console.log("SDfssds");
 
       var httpobj = logoutService.logoutPage();
       httpobj.then(function(response)
@@ -495,22 +487,16 @@ $scope.getData11();
           toastr.success("successfully logout");
           $location.path("/login");
         }
-      //   else {
-      //     // console.log("fgfgfd");
-      //     // $location.path("/signup");
-      //   }
-          // $scope.user="";
-
-        //console.log(response);
       }, function(response) {
           // this function handles error
       });
   }
-
+//this function will call when user want to add new card
   $scope.done = function()
   {
   //  $rootScope.activity[10]="pavan you added new note";
   $scope.myvalue=false;
+  // it will read data from user
   var body=$scope.body11;
   var tit=$scope.title;
   if ((tit == undefined && body == undefined) || (tit == null && body == null) || (tit == "" && body == "")) {
@@ -526,8 +512,8 @@ $scope.getData11();
   }
   // console.log($scope.body11);
 
-    var httpobj1=datainsertion.done(todo);
-    httpobj1.then(function(response)
+    var httpobj=datainsertion.done(todo);
+    httpobj.then(function(response)
   {
     console.log(response);
     $scope.title="";
@@ -541,6 +527,7 @@ $scope.getData11();
   }
 
 });
+//logout api is called
 app.service("logoutService",function($http) {
     this.logoutPage = function() {
         return $http({
@@ -549,6 +536,7 @@ app.service("logoutService",function($http) {
         });
     }
 });
+//addcard api is called
 app.service("datainsertion",function($http)
 {
   this.done=function(todo)
@@ -561,6 +549,7 @@ app.service("datainsertion",function($http)
       })
   }
 });
+//addcard api is called for copy the card.
 app.service("copyContent",function($http)
 {
   this.copydata=function(todo)
@@ -573,6 +562,7 @@ app.service("copyContent",function($http)
       })
   }
 });
+//deletecard api is called
 app.service("datadeletion",function($http)
 {
 this.delete = function(id)
@@ -583,6 +573,7 @@ this.delete = function(id)
   })
 }
 });
+//getData api is called;
 app.service("getcardIn",function($http)
 {
 this.getData11=function()
@@ -593,18 +584,7 @@ method:"post"
   })
 }
 });
-// app.service("dataupdation",function($http)
-// {
-// this.update=function(udata)
-// {
-//   console.log(udata);
-// return $http({
-// url:"/updatecard",
-// method:"post",
-// data:udata
-//   })
-// }
-// });
+//setcolor api is called
 app.service("colorchange",function($http)
 {
 this.changeColor=function(id,color)

@@ -11,6 +11,9 @@
     overflow-y: scroll;
 }*/
 
+#wrapper.toggled {
+    padding-left: 0;
+}
 
 #datepick {
     width: 250px;
@@ -42,11 +45,17 @@
     width: 100%;
 
 }
+#sidebar-wrapper {
+    width: 250px;
+}
 
 #wrapper.toggled #page-content-wrapper {
     /*position: absolute;*/
     /*margin-right: -250px;*/
 
+}
+#wrapper.toggled #sidebar-wrapper {
+    width: 0;
 }
 
 
@@ -153,7 +162,7 @@ body
 
 #navbar11
 {
-  background-color:orange;
+  background-color:#fb0;
 }
 h3
 {
@@ -255,7 +264,9 @@ border:none;
 {
   /*height: auto;*/
   /*min-width:300px;*/
-  min-height: 100px;
+  /*width:200px;*/
+  min-width: 200px;
+  min-height: 130px;
   word-wrap: break-word;
   background-color: white;
   margin-top: 30px;
@@ -566,7 +577,6 @@ margin-right: 32px;
     outline: none;
     background-color: #fff;
 }
-
 #updatetitle {
     font-size: 18px;
     font-weight: bold;
@@ -659,4 +669,12 @@ li img {
 
 #remindericon:hover {
     color: #000;
+}
+#activitydate
+{
+  width:90px;
+  height:20px;
+  /*border:1px solid black;*/
+  background-color: #0ba;
+  color:white;
 }

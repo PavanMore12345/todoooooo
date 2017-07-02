@@ -18,12 +18,14 @@
 	  border-right: 1px solid black;
 	  float: left;
 	  box-sizing: border-box;
+	  border:1px solid black
 	}
 
 	.right-col {
 	  width: 50%;
 	  min-height: 50px;
 	  float: right;
+	  border: 1px solid black
 	}
 	#todo
 	{
@@ -35,7 +37,7 @@ color:red;
 }
 .navbar-inverse
 {
-  background-color: orange;
+  background-color:#fb0;
 }
 .navbar-nav>.active>a
 {

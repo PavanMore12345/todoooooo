@@ -1,6 +1,15 @@
-/**
- * facebook login controller
- */var express = require('express'),
+
+/*
+ * archive the card
+ * @path controller/archive.js
+ * @file archive.js
+ * @Scripted by Pavan
+ */
+
+/*ModuleModule
+ * Module dependencies
+ */
+ var express = require('express'),
       app = express(),
      router = express.Router();
  var jwt    = require('jsonwebtoken');
@@ -9,7 +18,7 @@ var User = require('../model/user');
 var fbConfig = require('../config/auth');
 var passport = require('passport');
 var config = require('../config/index');
-
+var logger = require('winston');
 module.exports = function(passport) {
 
     // pull in our app id and secret from our auth.js file
@@ -40,7 +49,8 @@ module.exports = function(passport) {
                     });
                     //console.log(token);
                     localStorage.setItem('myKey', token);
-                    return done(null, user); /// user found, return that user
+                    return done(null, user);
+                    //logger.info("facebook login"); /// user found, return that user
                 } else {
                     // if there is no user found with that facebook id, create them
                     var newUser = new User();

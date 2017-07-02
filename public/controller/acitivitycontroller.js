@@ -1,18 +1,19 @@
+/* this controller will call when user  changes route*/
 app.controller('activityController', ['$scope','$controller','getcardData', function($scope, $controller,getcardData)
 {
+//this controller is sub controller of activity controller
   $controller('todoController', {$scope: $scope})
     $scope.booleanval=true;
-    console.log("activity");
-      $scope.navbar11={'background-color':'#1CEAE7'};
+    $scope.inputbox=true;
+    $scope.keep="Activities";
+     $scope.today = new Date();
+      $scope.navbar11={'background-color':'#6A6363'};
   $scope.getDataInfo = function()
 {
-  console.log("get");
-  var httpobj12 = getcardData.getDataInfo();
-  httpobj12.then(function(response)
+  var httpobj = getcardData.getDataInfo();
+  httpobj.then(function(response)
 {
   $scope.records=response.data.msg;
-  console.log($scope.records);
-  console.log(response);
   },function(response)
 {
 
@@ -21,6 +22,7 @@ app.controller('activityController', ['$scope','$controller','getcardData', func
 }]);
 app.service("getcardData",function($http)
 {
+//activity api called
 this.getDataInfo = function()
 {
 return $http({

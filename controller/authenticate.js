@@ -1,14 +1,19 @@
-//var apiRoutes = express.Router();
-
+/*
+ * it act as middleware api
+ * @path controller/authenticate.js
+ * @file authenticate.js
+ * @Scripted by Pavan
+ */
+/*ModuleModule
+ * Module dependencies
+ */
 var express = require('express'),
 router = express.Router();
 var jwt    = require('jsonwebtoken');
 var config = require('../config/index');
-//router.get('/auth', function(req, res) {
+var logger = require('winston');
  var LocalStorage = require('node-localstorage').LocalStorage;
 var  localStorage = new LocalStorage('./scratch');
-//var LocalStorage = require('node-localstorage').LocalStorage;
-
 router.use(function(req, res, next) {
 
   // check header or url parameters or post parameters for token
@@ -22,12 +27,13 @@ router.use(function(req, res, next) {
       if (err) {
         console.log(err);
         return res.json({ success: false, message: 'Failed to authenticate token.' });
+        logger.error(err)
       } else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
-        console.log("decodeddddddddddddddddddddddddddddddddddddddd",decoded);
         next();
         //res.json({success:true,message:req.decoded});
+        logger.info("toen is provided");
       }
     });
 
@@ -40,10 +46,4 @@ router.use(function(req, res, next) {
 
   }
 });
-//// route to show a random message (GET http://localhost:8080/api/)
-
-// route to return all users (GET http://localhost:8080/api/users)
-
-// apply the routes to our application with the prefix /api
-//app.use('/api', apiRoutes);
 module.exports=router;

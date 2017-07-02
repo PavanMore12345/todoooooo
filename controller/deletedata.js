@@ -8,7 +8,7 @@ router.post('/:id', function(request, response) {
   var data=request.body;
   var userid=request.decoded.id;
 //console.log(data);
-  userData.deleteNote(id,data,userid, function(err, result) {
+  userData.deleteNote(id, function(err, result) {
     console.log("deleteddata",data);
     //console.log("result",userid);
     if (err) {

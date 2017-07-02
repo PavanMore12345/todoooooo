@@ -1,9 +1,19 @@
+/*
+ * check username and password
+ * @path controller/login.js
+ * @file login.js
+ * @Scripted by Pavan
+ */
+/*ModuleModule
+ * Module dependencies
+ */
 var express = require('express'),
     app = express(),
     router = express.Router(),
     login = require('../model/user');
 var config = require('../config/index');
 var config1 = require('../config/config');
+var logger = require('winston');
 var jwt = require('jsonwebtoken');
 //var validator = require('express-validator');
 //  var localStorage = require('node-localstorage').LocalStorage;
@@ -18,7 +28,7 @@ app.set('superSecret', config.secret);
 //     "message": "Something Bad Happened. Please contact system administrator."
 // };
 // console.log("asfdashfhsafhga");
-
+//login api is called.
 router.post('/', function(req, res) {
   var result = {};
   result.status = false;
@@ -42,14 +52,15 @@ router.post('/', function(req, res) {
                     // console.log(errors);
                 }
                 // console.log("asfdashfhsafhga");
-
+                //searching into the database.
                 login.checklogin(loginData, function(err, data) {
                     try {
                         if (err || !data) {
                             throw err
+                            logger.error(err)
                         }
                         var Userobj = data.toJSON();
-                        var token = jwt.sign({
+                        var token = jwt.sign({ // it create jwt token
                             id: Userobj._id
                         }, app.get('superSecret'), {
                             expiresIn: 1440*60 // expires in 24 hours
@@ -58,10 +69,11 @@ router.post('/', function(req, res) {
                         res.send({
                             "status": true,
                             "message": "Successfully Login",
-                            token: token
+                             token: token
                         });
-                    } catch (e) {
-                      //  console.log(e);
+                        logger.info("successfully login")
+                    } catch (e)
+                    {
                         res.send({
                             "status": false,
                             "message": "Authorization failed"

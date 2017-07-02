@@ -1,5 +1,5 @@
 //var scotchApp = angular.module('scotchApp', []);
-var app = angular.module('app', ['ui.router','ngSanitize', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngImgCrop','satellizer','toastr'])
+var app = angular.module('app', ['ui.router','angular-lazyload','ngSanitize', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 'ngImgCrop','satellizer','toastr'])
   .config(function($stateProvider, $urlRouterProvider) {
 
 
@@ -34,7 +34,7 @@ var app = angular.module('app', ['ui.router','ngSanitize', 'ui.bootstrap', 'ui.b
           templateUrl: 'template/delete.html',
            controller: 'deleteController',
          })
-    $urlRouterProvider.otherwise('/todo');
+    $urlRouterProvider.otherwise('/login');
   })
        app.directive('contenteditable1', [function() {
     return {
@@ -65,4 +65,5 @@ var app = angular.module('app', ['ui.router','ngSanitize', 'ui.bootstrap', 'ui.b
             });
         }
     };
+    
 }]);

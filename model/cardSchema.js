@@ -1,321 +1,299 @@
+/*
+ * card Schema
+ * @path model/activitySchema.js
+ * @file activitySchema.js
+ */
+
 var express = require('express'),
     app = express(),
     router = express.Router();
 var mongo = require('mongoose');
-var noteInfo=require('./activitySchema');
-var connect1 = mongo.createConnection('mongodb://127.0.0.1/mydb2');
+var noteInfo = require('./activitySchema');
+var connect = mongo.createConnection('mongodb://127.0.0.1/mydb2');
 var Schema = mongo.Schema;
+//schema for user
 var cardSchema = Schema({
-    id1: {
+    id:
+    {
         type: Number
         // unique: true
     },
-    title: {
+    title:
+    {
         type: String
-
     },
-    created_at: {
-       type: Date
-   },
-   updated_at: {
-       type: Date
-   },
-   color: {
-     type:String
-   },
-   reminder: {
-       type: Date
-   },
-    bodyContent: {
+    created_at:
+    {
+        type: Date
+    },
+    updated_at:
+    {
+        type: Date
+    },
+    color:
+    {
         type: String
-
     },
-archive:{
-  type:Boolean
-},
-bgcolor:
-{
-  type:String
-},
-noteData:
-{
-  type:String
-},
-pinInfo:
-{
-  type:String
-},
-pin_note:
- {
- type:Boolean
- },
+    reminder:
+    {
+        type: Date
+    },
+    bodyContent:
+    {
+        type: String
+    },
+    archive:
+    {
+        type: Boolean
+    },
+    bgcolor:
+    {
+        type: String
+    },
+    noteData:
+    {
+        type: String
+    },
+    pinInfo:
+    {
+        type: String
+    },
+    pin_note:
+    {
+        type: Boolean
+    },
 }, {
     collection: "cardData"
-});
-
-cardSchema.statics.setColors = function(id,color, cb) {
-
+   });
+// set color has stored into the databse
+cardSchema.statics.setColors = function(id, color, cb) {
+    //set the color activity into the database
     this.findById(id, function(err, user) {
-          // console.log("inside function",color);
         if (user) {
-            // console.log("user",user);
-            // console.log(bodyData);
-            // var note=new noteInfo();
-            // note.id1=user.id1;
-            // note.data="hello";
-            // note.save();
-
-           //var title=user.title;
             var note = new noteInfo({
-                id1:user.id1,
-                data:user.title + " set the color"
-
+                id: user.id,
+                title:user.title,
+                data: " set the color"
             });
-            note.save().then(function(out){
-              //console.log("resultDASCSDVDS",out);
-            }).catch(function(err){
-              console.log("err",err);
+            note.save().then(function(out) {}).catch(function(err) {
+                console.log("err", err);
             })
-
-
+            //read the color code
             user.color = color.color;
-            // user.content = bodyData.content;
-
+            //store into the database
             user.save(cb);
-        } else {
+        } else
+         {
             cb('cant set color', err);
-        }
+         }
     });
 };
-cardSchema.pre('save', function(next) {
+//hook method to set currentTime and Update time
+cardSchema.pre('save', function(next)
+{
     // get the current date
-    // console.log("pre");
     var currentDate = new Date();
-
     // change the updated_at field to current date
     this.updated_at = currentDate;
-
     // if created_at doesn't exist, add to that field
     if (!this.created_at)
-        this.created_at = currentDate;
-
+    this.created_at = currentDate;
     next();
 });
-cardSchema.statics.reminders = function(reminder, id, cb) {
+// set the reminders into the database
+cardSchema.statics.reminders = function(reminder, id, cb)
+{
 
-    this.findById(id, function(err, user) {
-        // console.log("inside function",reminder);
-         if (user) {
-          var note = new noteInfo({
-              id1:user.id1,
-              data:user.title + "set the reminder as a"+reminder.time
+    this.findById(id, function(err, user)
+    {
 
-          });
-          note.save().then(function(out){
-            //console.log("resultDASCSDVDS",out);
-          }).catch(function(err){
-            console.log("err",err);
-          })
-            // console.log("user",user);
-            // console.log(bodyData);
+        if (user)
+        {
+            var note = new noteInfo({
+                id: user.id,
+                title:user.title,
+                data: "set the reminder"
+
+            });
+            note.save().then(function(out) {
+
+            }).catch(function(err) {
+                console.log("err", err);
+            })
             user.reminder = reminder.time;
-            // user.content = bodyData.content;
             user.save(cb);
-        } else {
+        } else
+         {
             cb('cant add reminder', err);
         }
     });
 };
 
-// Remove reminder
-cardSchema.statics.removeReminder = function(id, cb) {
+// Remove reminder from the database
+cardSchema.statics.removeReminder = function(id, cb)
+{
 
-    this.findById(id, function(err, user) {
-        // console.log(bodyData.title);
-        if (user) {
-          var note = new noteInfo({
-              id1:user.id1,
-              data:user.title+" remove the reminder "
+    this.findById(id, function(err, user)
+    {
 
-          });
-          note.save().then(function(out){
-            //console.log("resultDASCSDVDS",out);
-          }).catch(function(err){
-            console.log("err",err);
-          })
-            console.log(user);
+     if (user)
+        {
+            var note = new noteInfo({
+                id: user.id,
+                title:user.title,
+                data:"remove the reminder"
+
+            });
+            note.save().then(function(out)
+            {
+
+            })
             user.reminder = null;
             user.save(cb);
-        } else {
-            cb('cant remove reminder', err);
         }
+        else
+         {
+            cb('cant remove reminder', err);
+          }
     });
 };
-cardSchema.statics.addCardData = function(data, callback) {
-  console.log(data);
+// add the card into the database
+cardSchema.statics.addCardData = function(data, callback)
+{
     var self = this;
-    var card = new self({
-        id1:data.id1,
-        title:data.title,
-        bodyContent:data.bodyContent
+    // read the data from user
+    console.log("addcrad",data.id);
+    var card = new self
+    ({
+        id: data.id,
+        title: data.title,
+        bodyContent: data.bodyContent
     });
+    //store the activity into the database
     var note = new noteInfo({
-        id1:data.id1,
-        data:data.title+" added the card "
-
+        id: data.id,
+        title:data.title,
+        data:" added the card "
     });
-    note.save().then(function(out){
-      //console.log("resultDASCSDVDS",out);
-    }).catch(function(err){
-      //console.log("err",err);
+    note.save().then(function(out)
+    {
+
+    }).catch(function(err) {
+
     })
     card.save(callback);
 }
-cardSchema.statics.getCard=function(id,callback)
-            {
-//console.log("id is", id);
-                User.find({id1:id},callback);
-              }
-  // cardSchema.statics.deleteCardData=function(id,callback)
-  // {
-  //   this.findById(id, function(err, user) {
-  //     console.log("user",user);
-  //   var note = new noteInfo({
-  //       id1:user.id1,
-  //     data:user.title+"deleted card "
-  //
-  //   });
-  //   note.save().then(function(out){
-  //     //console.log("resultDASCSDVDS",out);
-  //   }).catch(function(err){
-  //     console.log("err",err);
-  //   })
-  //   User.remove({_id:id},callback);
-  // });
-  //
-  // }
-  cardSchema.statics.update = function(bodyData, id, callback) {
-    if (bodyData.title == undefined && bodyData.bodyContent == undefined) {
+// get the card store in the database
+cardSchema.statics.getCard = function(id, callback)
+ {
+     // find data of particular id return all the data.
+    User.find({
+        id: id
+    }, callback);
+ }
+ //delete the card from database
+cardSchema.statics.deleteCardData = function(id, callback) {
+
+    this.findById(id, function(err, user)
+    {
+     //store the activity deleted from database in activitySchema
+        var note = new noteInfo({
+            id: user.id,
+            title:user.title,
+            data:"deleted card"
+        });
+        note.save().then(function(out)
+        {
+
+        }).catch(function(err)
+        {
+            console.log("err", err);
+        })
+        //it removes particular card of particular id
+        User.remove({
+            _id: id
+        }, callback);
+    });
+}
+// store the upadated card into the database
+cardSchema.statics.updateCard = function(bodyData, id, callback) {
+    if (bodyData.title == undefined && bodyData.bodyContent == undefined)
+    {
         //callback("input undefine", null);
         return;
     }
-    this.findById(id, function(err, user) {
-        if (user) {
+    this.findById(id, function(err, user)
+    {
+        if (user)
+        {
+            //read data from user
             user.title = bodyData.title;
             user.bodyContent = bodyData.bodyContent;
             //sending callback to controller
             user.save(callback);
-        } else {
-          //  callback('cant update', err);
+        } else
+        {
+     //  callback('cant update', err);
         }
     });
 };
-  cardSchema.statics.getCardData=function(id,callback)
-  {
-    //console.log("iddddd",id);
-    User.find({_id:id},callback);
-  }
-  // cardSchema.statics.updateCardData=function(data,callback)
-  // {
-  //   // console.log("abccccccccccc");
-  //   // var self = this;
-  //   // var card = new self({
-  //   //     title:data.title,
-  //   //     bodyContent:data.bodyContent
-  //   // });
-  //   console.log(data);
-  //   var note = new noteInfo({
-  //       id1:user.id1,
-  //       data:user.title+" upadated the card "
-  //   });
-  //   note.save().then(function(out){
-  //     //console.log("resultDASCSDVDS",out);
-  //   }).catch(function(err){
-  //     //console.log("err",err);
-  //   })
-  //   console.log(data);
-  //    User.update({ _id: data.id }, { $set: {title:data.title,bodyContent:data.bodyContent}},callback);
-  //   // card.save(callback);
-  // }
-  cardSchema.statics.pinnedData= function(note_id,booleanvalue,id, callback)
-  {
-  //console.log("Boolean value",booleanvalue);
-//   this.findById(note_id, function(err, user) {
-//   var note = new noteInfo({
-//       id1:id,
-//       data:user.title+" pinned the card"
-//   });
-//   note.save().then(function(out){
-//     //console.log("resultDASCSDVDS",out);
-//   }).catch(function(err){
-//     //console.log("err",err);
-//   })
-// });
-  //console.log("callback",callback);
-  this.update({
-    _id: note_id
-  }, {
-    $set: {
-pin_note:booleanvalue.value,
- archive:booleanvalue.removearchive
-    }
-  }, callback);
-  //console.log("user",user);
+// get the card from database
+cardSchema.statics.getCardData = function(id, callback)
+{
+    User.find({
+        _id: id
+    }, callback);
 }
-cardSchema.statics.archiveNote = function(noteId,booleanvalue,id,callback) {
-   console.log("Archive val",booleanvalue);
-  this.findById(noteId, function(err, user) {
-  var note = new noteInfo({
-      id1:id,
-      data:user.title+" archieved the Note "
-  });
-  note.save().then(function(out){
-    // console.log("resultDASCSDVDS",out);
-  }).catch(function(err){
-    //console.log("err",err);
-  })
-});
-  this.update({
-    _id: noteId
-  }, {
-    $set: {
-      archive:booleanvalue.value,
-     pin_note:booleanvalue.pin
-    }
-  }, callback);
+// store the pinned card into the database
+cardSchema.statics.pinnedData = function(note_id, booleanvalue, id, callback) {
+    this.findById(note_id, function(err, user) {
+     // store the pinned the activity into the database.
+        var note = new noteInfo({
+            id: id,
+            title:user.title,
+            data:" pinned the card"
+        });
+        note.save().then(function(out) {
+
+        }).catch(function(err) {
+
+        })
+    });
+
+    this.update({
+        _id: note_id
+    }, {
+        $set:
+        {
+            pin_note: booleanvalue.value,
+            archive: booleanvalue.removearchive
+        }
+    }, callback);
 }
-cardSchema.statics.deleteNote = function(noteId,deleteval,id,callback) {
-  // console.log("Archive val",booleanvalue);
-  console.log("delete",deleteval);
-  this.findById(noteId, function(err, user) {
-  var note = new noteInfo({
-      id1:id,
-      data:user.title +" deleted the Note "
-  });
-  note.save().then(function(out){
-    // console.log("resultDASCSDVDS",out);
-  }).catch(function(err){
-    console.log("err",err);
-  })
-});
-  this.update({
-    _id: noteId
-  }, {
-    $set: {
-      deletenote:deleteval.value
-    }
-  }, callback);
+// store the archive note into the database
+cardSchema.statics.archiveNote = function(noteId, booleanvalue, callback) {
+
+    this.findById(noteId, function(err, user) {
+        var note = new noteInfo({
+            id: noteId,
+            title:user.title,
+            data:" archieved the Note "
+        });
+        note.save().then(function(out) {
+
+        }).catch(function(err) {
+
+        })
+    });
+    //store archive value into the database
+    this.update({
+        _id: noteId
+    }, {
+        $set: {
+            archive: booleanvalue,
+             pin_note:booleanvalue.pin
+        }
+    }, callback);
 }
-// cardSchema.statics.noteStatus = function(data, callback) {
-//     var self = this;
-//     var note = new self({
-//      noteData:data.note
-//     });
-//     card.save(callback);
-// }
-  // cardSchema.statics.updateCardData=function(id,callback)
-  // {
-  //   User.update({_id:id},{$set:{'title':'New MongoDB Tutorial'},{'body':'sdfsf'}});
-  // }
-var User = connect1.model('User', cardSchema);
+var User = connect.model('User', cardSchema);
 module.exports = User;

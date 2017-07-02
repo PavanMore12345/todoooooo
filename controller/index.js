@@ -1,8 +1,14 @@
+/*
+ * call all the apis
+ * @path controller/index.js
+ * @file index.js
+ * @Scripted by Pavan
+ */
+/*ModuleModule
+ * Module dependencies
+ */
 var express = require('express'),
 router = express.Router();
-// router.get('/',function(req,res){
-//    res.send('main controller');
-// });
 var jwt    = require('jsonwebtoken');
 var config = require('../config/index');
 var passport = require('passport');
@@ -35,7 +41,7 @@ router.use('/addcard',require('./authenticate'),require('./addcard'));
 //router.use('/imageload',require('./userdata'));
 //router.use('/',require('./logout'));
 router.use('/getData',require('./authenticate'),require('./getData'));
-router.use('/getuserdata',require('./authenticate'),require('./getuserdata'));
+//router.use('/getuserdata',require('./authenticate'),require('./getuserdata'));
 router.use('/userprofile',require('./authenticate'),require('./userprofile'));
 //router.use('/deletecard',require('./notecard'));
 router.use('/reminders',require('./reminders'));
@@ -46,7 +52,7 @@ router.use('/pinnote',require('./authenticate'),require('./pinnote'));
 //     passport.authenticate('facebook', {
 //         scope: ['email','public_profile','user_photos','publish_actions','user_status']
 //     }));
-    router.use('/archieve',require('./authenticate'),require('./archieve'));
+    router.use('/archieve',require('./archieve'));
     router.use('/deletedata',require('./authenticate'),require('./deletedata'));
 router.get('/facebook/callback',facebookSignInCallback);
 function facebookSignInCallback(req, res, next) {
